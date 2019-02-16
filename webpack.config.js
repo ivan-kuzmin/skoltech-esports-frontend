@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 
-const games = ['pageOne', 'balls']
+const games = ['balls']
 const entryGames = {}
 for (name of games) {
   entryGames[name] = `./src/games/${name}/index.js`
