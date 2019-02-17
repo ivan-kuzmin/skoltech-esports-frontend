@@ -114,23 +114,38 @@ window.draw = function() {
   })
 
   if (globalState.selectedBalls.length === globalState.current_level.red_balls) {
+    let target_balls = {}
+    let clicked_balls = {}
+    globalState.balls.slice(0, globalState.current_level.red_balls).forEach(ball => {
+      target_balls[ball.id] = {
+        x: (ball.xpos).toFixed(3),
+        y: (ball.ypos).toFixed(3)
+      }
+    })
     globalState.selectedBalls.forEach(id => {
       if (id >= globalState.current_level.balls - globalState.current_level.red_balls) {
         globalState.trueBalls++
       } else {
         globalState.falseBalls++
       }
+      let ball = globalState.balls[id]
+      clicked_balls[id] = {
+        x: (ball.xpos).toFixed(3),
+        y: (ball.ypos).toFixed(3)
+      }
     })
     globalState.results = {}
     globalState.results = {
-      success:     globalState.trueBalls === globalState.current_level.red_balls && globalState.falseBalls === 0,
-      level:       globalState.current_level.level,
-      true_balls:  globalState.trueBalls,
-      false_balls: globalState.falseBalls,
-      balls:       globalState.current_level.balls,
-      red_balls:   globalState.current_level.red_balls,
-      speed:       globalState.current_level.speed,
-      radius:      globalState.rad,
+      success:       globalState.trueBalls === globalState.current_level.red_balls && globalState.falseBalls === 0,
+      level:         globalState.current_level.level,
+      true_balls:    globalState.trueBalls,
+      false_balls:   globalState.falseBalls,
+      balls:         globalState.current_level.balls,
+      red_balls:     globalState.current_level.red_balls,
+      target_balls:  target_balls,
+      clicked_balls: clicked_balls,
+      speed:         globalState.current_level.speed,
+      radius:        globalState.rad,
     }
     window.saveResults(globalState.results)
     globalState.results = {}

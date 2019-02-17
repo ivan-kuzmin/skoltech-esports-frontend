@@ -35,14 +35,6 @@ class App extends Component {
       this.getUser()
     }
   }
-  // startNewGame = () => {
-  //   window.createBalls(globalState.current_level.speed)
-  //   newGameButton.attribute('disabled', 'true')
-  //   select('#app').style('z-index', 0)
-  //   filter.hide()
-  //   language.hide()
-  //   window.startGameFunction()
-  // }
   changeLanguage = () => {
     let { current_lang } = this.state
     current_lang = (current_lang === 'ru') ? 'en' : 'ru'
