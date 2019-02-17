@@ -116,7 +116,7 @@ window.draw = function() {
   if (globalState.selectedBalls.length === globalState.current_level.red_balls) {
     let target_balls = {}
     let clicked_balls = {}
-    globalState.balls.slice(0, globalState.current_level.red_balls).forEach(ball => {
+    globalState.balls.reverse().slice(0, globalState.current_level.red_balls).forEach(ball => {
       target_balls[ball.id] = {
         x: (ball.xpos).toFixed(3),
         y: (ball.ypos).toFixed(3)
