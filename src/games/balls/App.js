@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 class App extends Component {
   state = {
+    status: false,
     token: this.props.cookies.get('token'),
     current_lang: this.props.cookies.get('language') || 'en'
   }
@@ -25,7 +26,6 @@ class App extends Component {
       console.log(data)
     })
     .catch((err) => {
-      this.setState({status: false})
       console.log('Fetch Error: ', err)
     })
   }
@@ -50,10 +50,10 @@ class App extends Component {
     this.setState({ current_lang })
   }
   render() {
-    const { current_lang, status, current_level, results, newGame } = this.state
+    const { current_lang, status, current_level, results, newGame, token } = this.state
     return (
       <div className="w-100 h-100 d-flex">
-        <Menu current_level={current_level} status={status} lang={lang[current_lang]} />
+        <Menu token={token} current_level={current_level} status={status} lang={lang[current_lang]} />
         <Filter user={this.state.user} results={results} status={status} lang={lang[current_lang]} changeLanguage={this.changeLanguage} ref={ref => window.filterComponent = ref} />
       </div>
     )

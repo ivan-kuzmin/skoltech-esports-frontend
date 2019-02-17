@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { withCookies } from 'react-cookie';
-// import { Container, Row, Col, Navbar, NavbarBrand, Button } from 'reactstrap'
+import { Button } from 'reactstrap'
 import styled from 'styled-components'
 import globalState from '../globalState'
 
@@ -19,7 +19,7 @@ const Background = styled.div`
 
 class Menu extends Component {
   render() {
-    const { lang, status } = this.props
+    const { lang, status, token } = this.props
     const current_level = this.props.current_level || globalState.current_level
     return (
       <Background id="menu" className="px-3 py-5">
@@ -34,7 +34,7 @@ class Menu extends Component {
           <div>{`${lang.red_balls}: ${current_level.red_balls}`}</div>
           <div>{`${lang.balls_radius}: ${globalState.rad}`}</div>
         </div>
-        <button type="button" className="btn btn-warning w-100 mb-1 text-uppercase" id="newGameButton">{lang.new_game}</button>
+        <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" id="newGameButton">{lang.new_game}</Button>
         <a href="/" role="button" className="btn btn-warning w-100 text-uppercase" id="backButton">{lang.home}</a>
       </Background>
     )

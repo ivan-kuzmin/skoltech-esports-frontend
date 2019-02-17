@@ -8,7 +8,6 @@ import 'src/assets/css/style.css'
 import globalState from './globalState'
 import { token } from 'src/assets/js/script'
 
-
 ReactDOM.render(<CookiesProvider><App ref={ref => {window.appComponent = ref}} /></CookiesProvider>, document.getElementById('app'));
 
 let fps = 0
@@ -20,13 +19,10 @@ window.setup = function() {
   ellipseMode(RADIUS)
 
   newGameButton = select('#newGameButton')
-  // filter = select('#filter')
 
   newGameButton.mouseClicked(function() {
     window.createBalls(globalState.current_level.speed)
     newGameButton.attribute('disabled', 'true')
-    // select('#app').style('z-index', 0)
-    // filter.hide()
     window.filterComponent.setState({ visible: false })
     window.startGameFunction()
   })
@@ -65,8 +61,6 @@ window.newGameFunction = function() {
 window.startDemoFunction = function() {
   globalState.moveBalls = true
   newGameButton.removeAttribute('disabled')
-  // filter.style('display', 'flex')
-  // select('#app').style('z-index', 2)
   window.createBalls(globalState.demoSpeed)
 }
 
