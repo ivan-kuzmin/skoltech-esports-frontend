@@ -19,7 +19,7 @@ const globalState = {
   demoSpeed: 0.5,
   startTime: 1,
   gameTime: 1,
-  countOfGames: 10,
+  countOfGames: 3,
   playedGames: 0
 }
 

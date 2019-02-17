@@ -8,11 +8,17 @@ import Result from './Result'
 
 const Background = styled.div`
   background: rgba(0,0,0,0.7);
+  position: absolute;
+  left: 20%;
+  width: 80%;
+  height: ${props => props.visible ? '100%' : '0'};
+  opacity: ${props => props.visible ? '1' : '0'};
+  transition: ${props => props.visible ? '0.3s' : '0'};
   display: flex;
-  flex: 0 0 80%;
-  max-width: 80%;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  z-index: 2;
 `
 
 const ResultsContainer = styled.div`
@@ -33,10 +39,14 @@ const Results = styled.div`
 `
 
 class Filter extends Component {
+  state = {
+    visible: true
+  }
   render() {
+    const { visible } = this.state
     const { lang, changeLanguage, status, user, results } = this.props
     return (
-      <Background id="filter">
+      <Background id="filter" visible={visible}>
         <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
           <h3 className="text-center text-uppercase mb-3 font-weight-bold">{lang.last_results}:</h3>
           <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4">

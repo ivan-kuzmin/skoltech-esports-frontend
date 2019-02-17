@@ -11,6 +11,7 @@ import { token } from 'src/assets/js/script'
 
 ReactDOM.render(<CookiesProvider><App ref={ref => {window.appComponent = ref}} /></CookiesProvider>, document.getElementById('app'));
 
+let fps = 0
 
 window.setup = function() {
   let container = document.getElementById('canvas')
@@ -19,15 +20,14 @@ window.setup = function() {
   ellipseMode(RADIUS)
 
   newGameButton = select('#newGameButton')
-  filter = select('#filter')
-  language = select('#language')
+  // filter = select('#filter')
 
   newGameButton.mouseClicked(function() {
     window.createBalls(globalState.current_level.speed)
     newGameButton.attribute('disabled', 'true')
-    select('#app').style('z-index', 0)
-    filter.hide()
-    language.hide()
+    // select('#app').style('z-index', 0)
+    // filter.hide()
+    window.filterComponent.setState({ visible: false })
     window.startGameFunction()
   })
 
@@ -65,9 +65,8 @@ window.newGameFunction = function() {
 window.startDemoFunction = function() {
   globalState.moveBalls = true
   newGameButton.removeAttribute('disabled')
-  filter.style('display', 'flex')
-  select('#app').style('z-index', 2)
-  language.show()
+  // filter.style('display', 'flex')
+  // select('#app').style('z-index', 2)
   window.createBalls(globalState.demoSpeed)
 }
 
@@ -150,6 +149,8 @@ window.draw = function() {
   fill(0,0,0)
   text(`Level: ${globalState.current_level.level}`, 30, 30)
   text(`Trials: ${globalState.playedGames}/${globalState.countOfGames}`, 30, 50)
+  if (frameCount%10 === 0) { fps = frameRate() }
+  text(`FPS: ${fps.toFixed(1)}`, 30, 70)
 }
 
 
@@ -158,6 +159,7 @@ window.windowResized = function() {
   resizeCanvas(container.offsetWidth, container.offsetHeight)
   window.newGameFunction()
   window.startDemoFunction()
+  window.filterComponent.setState({ visible: true })
 }
 
 
@@ -241,6 +243,8 @@ window.saveResults = function(results) {
         if (globalState.playedGames === globalState.countOfGames) {
           globalState.playedGames = 0
           window.startDemoFunction()
+          window.appComponent.getUser()
+          window.filterComponent.setState({ visible: true })
         } else {
           window.createBalls(globalState.current_level.speed)
           window.startGameFunction()

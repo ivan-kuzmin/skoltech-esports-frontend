@@ -3,6 +3,7 @@ import { withCookies } from 'react-cookie';
 import Menu from './components/Menu'
 import Filter from './components/Filter'
 import globalState, { lang } from './globalState'
+import styled from 'styled-components'
 
 class App extends Component {
   state = {
@@ -29,6 +30,7 @@ class App extends Component {
     })
   }
   componentDidMount() {
+    console.log("App mount")
     if (this.state.token) {
       this.getUser()
     }
@@ -48,11 +50,11 @@ class App extends Component {
     this.setState({ current_lang })
   }
   render() {
-    const { current_lang, status, current_level, results } = this.state
+    const { current_lang, status, current_level, results, newGame } = this.state
     return (
       <div className="w-100 h-100 d-flex">
         <Menu current_level={current_level} status={status} lang={lang[current_lang]} />
-        <Filter user={this.state.user} results={results} status={status} lang={lang[current_lang]} changeLanguage={this.changeLanguage} />
+        <Filter user={this.state.user} results={results} status={status} lang={lang[current_lang]} changeLanguage={this.changeLanguage} ref={ref => window.filterComponent = ref} />
       </div>
     )
   }
