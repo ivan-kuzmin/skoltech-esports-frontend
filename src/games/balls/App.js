@@ -53,8 +53,19 @@ class App extends Component {
     const { current_lang, status, current_level, results, newGame, token } = this.state
     return (
       <div className="w-100 h-100 d-flex">
-        <Menu token={token} current_level={current_level} status={status} lang={lang[current_lang]} />
-        <Filter user={this.state.user} results={results} status={status} lang={lang[current_lang]} changeLanguage={this.changeLanguage} ref={ref => window.filterComponent = ref} />
+        <Menu
+          token={token}
+          current_level={current_level}
+          status={status}
+          lang={lang[current_lang]} />
+        <Filter
+          user={this.state.user}
+          results={results}
+          status={status}
+          current_lang={current_lang}
+          lang={lang[current_lang]}
+          changeLanguage={this.changeLanguage}
+          ref={ref => window.filterComponent = ref} />
       </div>
     )
   }

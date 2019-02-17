@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const Button = styled.div`
   padding: 5px 10px;
   position: absolute;
-  font-weight: bold;
+  ${'' /* font-weight: bold; */}
   cursor: pointer;
   top: 20px;
   right: 20px;
@@ -26,9 +26,12 @@ const Button = styled.div`
 
 class Language extends Component {
   render() {
-    const { changeLanguage } = this.props
+    const { changeLanguage, current_lang } = this.props
     return (
-      <Button id="language" className="bg-warning" onClick={changeLanguage}>RU/EN</Button>
+      <Button id="language" className="bg-warning" onClick={changeLanguage}>
+        <span className={current_lang === 'ru' ? 'font-weight-bold' : ''}>RU</span>/
+        <span className={current_lang === 'en' ? 'font-weight-bold' : ''}>EN</span>
+      </Button>
     )
   }
 }

@@ -44,7 +44,7 @@ class Filter extends Component {
   }
   render() {
     const { visible } = this.state
-    const { lang, changeLanguage, status, user, results } = this.props
+    const { lang, changeLanguage, current_lang, status, user, results } = this.props
     return (
       <Background id="filter" visible={visible}>
         <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
@@ -63,7 +63,7 @@ class Filter extends Component {
             }
           </Results>
         </ResultsContainer>
-        <Language changeLanguage={changeLanguage} />
+        <Language current_lang={current_lang} changeLanguage={changeLanguage} />
       </Background>
     )
   }
