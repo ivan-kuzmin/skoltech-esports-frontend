@@ -1,32 +1,3 @@
-import { onPropertyChange } from 'src/assets/js/script'
-
-const globalState = {
-  url: 'http://localhost:8000/balls/results/',
-  current_level: {
-    level: 1,
-    balls: 12,
-    speed: 3,
-    red_balls: 4,
-  },
-  newGame: false,
-  startGame: false,
-  rad: 50,
-  balls: [],
-  selectedBalls: [],
-  trueBalls: 0,
-  falseBalls: 0,
-  moveBalls: false,
-  demoSpeed: 0.5,
-  startTime: 1,
-  gameTime: 1,
-  countOfGames: 3,
-  playedGames: 0
-}
-
-onPropertyChange(globalState, 'current_level', 'appComponent', 'current_level');
-
-export default globalState
-
 export const lang = {
   en: {
     header: 'Instruction',
@@ -52,4 +23,4 @@ export const lang = {
     home: 'Домой',
     last_results: 'Ваши последние результаты'
   }
-}
+};

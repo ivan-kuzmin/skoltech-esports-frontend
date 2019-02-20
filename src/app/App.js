@@ -6,7 +6,7 @@ import styled from "styled-components"
 import NavbarMenu from './components/NavbarMenu'
 import HomeScreen from './components/HomeScreen'
 // import Balls from './components/Balls'
-import UsersScreen from './components/UsersScreen'
+// import UsersScreen from './components/UsersScreen'
 
 const MenuFilter = styled.div`
   background: rgba(0,0,0,0.4);
@@ -128,7 +128,7 @@ class App extends Component {
                   <Route path="/" exact component={() => <Redirect from="/" to="/home" />} />
                   <Route path="/home" exact component={HomeScreen} />
                   {/* <Route path="/home/balls" component={Balls} /> */}
-                  <Route path="/users/" component={UsersScreen} />
+                  {/* <Route path="/users/" component={UsersScreen} /> */}
                 </Col>
               </Row>
             </Container>

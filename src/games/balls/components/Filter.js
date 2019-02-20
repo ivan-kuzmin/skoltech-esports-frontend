@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
-// import { withCookies } from 'react-cookie';
-// import { Container, Row, Col, Navbar, NavbarBrand, Button } from 'reactstrap'
+import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import Spinner from './Spinner'
 import Language from './Language'
-import Result from './Result'
 
 const Background = styled.div`
   background: rgba(0,0,0,0.7);
   position: absolute;
   left: 20%;
   width: 80%;
-  height: ${props => props.visible ? '100%' : '0'};
+  height: 100%;
+  transform: translateY(${props => props.visible ? '0' : '-100%'});
   opacity: ${props => props.visible ? '1' : '0'};
-  transition: ${props => props.visible ? '0.3s' : '0'};
+  transition: ${props => props.visible ? '0.4s' : '0'};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,35 +37,40 @@ const Results = styled.div`
   }
 `
 
-class Filter extends Component {
-  state = {
-    visible: true
-  }
-  render() {
-    const { visible } = this.state
-    const { lang, changeLanguage, current_lang, status, user, results } = this.props
-    return (
-      <Background id="filter" visible={visible}>
-        <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
-          <h3 className="text-center text-uppercase mb-3 font-weight-bold">{lang.last_results}:</h3>
-          <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4">
-            {
-              status ?
-                <div>
-                  <h5 className="mt-2 mb-3">User: {user.username}</h5>
-                  <ul className="m-0 p-0" style={{listStylePosition: "inside"}}>
-                    {results.map((result, i) => <Result key={i} result={result} />)}
-                  </ul>
-                  <div>...</div>
-                </div> :
-                <Spinner />
-            }
-          </Results>
-        </ResultsContainer>
-        <Language current_lang={current_lang} changeLanguage={changeLanguage} />
-      </Background>
-    )
-  }
+const Filter = (props) => {
+  const { lang, changeLanguage, current_lang, status, user, results, Result, newGame } = props
+  return (
+    <Background id="filter" visible={!newGame}>
+      <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
+        <h3 className="text-center text-uppercase mb-3 font-weight-bold">{lang.last_results}:</h3>
+        <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4">
+          {
+            status ?
+              <div>
+                <h5 className="mt-2 mb-3">User: {user.username}</h5>
+                <ul className="m-0 p-0" style={{listStylePosition: "inside"}}>
+                  {results.map((result, i) => <Result key={i} result={result} />)}
+                </ul>
+                <div>...</div>
+              </div> :
+              <Spinner />
+          }
+        </Results>
+      </ResultsContainer>
+      <Language current_lang={current_lang} changeLanguage={changeLanguage} />
+    </Background>
+  )
 }
+
+Filter.propTypes = {
+  newGame: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  results: PropTypes.array,
+  status: PropTypes.bool.isRequired,
+  current_lang: PropTypes.string.isRequired,
+  lang: PropTypes.object.isRequired,
+  changeLanguage: PropTypes.func.isRequired,
+  Result: PropTypes.func.isRequired,
+};
 
 export default Filter;

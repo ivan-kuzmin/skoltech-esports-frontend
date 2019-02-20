@@ -1,66 +1,140 @@
-import React, { Component } from 'react'
+import React from 'react';
 import { withCookies } from 'react-cookie';
-import Menu from './components/Menu'
-import Filter from './components/Filter'
-import globalState, { lang } from './globalState'
-import styled from 'styled-components'
+import BaseApp from './BaseApp';
+import Menu from './components/Menu';
+import Filter from './components/Filter';
+import Result from './components/Result';
+import P5Wrapper from './P5Wrapper';
+import sketch from './P5Wrapper/sketch';
+import { lang } from './lang';
 
-class App extends Component {
-  state = {
-    status: false,
-    token: this.props.cookies.get('token'),
-    current_lang: this.props.cookies.get('language') || 'en'
-  }
-  getUser = () => {
-    fetch(globalState.url, { headers: { Authorization: `Token ${this.state.token}` } })
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        status: true,
-        user: {username: data.username},
-        current_level: data.current_level,
-        results: data.results
-      })
-      globalState.current_level = data.current_level
-      globalState.results = data.results
-      console.log(data)
-    })
-    .catch((err) => {
-      console.log('Fetch Error: ', err)
-    })
-  }
-  componentDidMount() {
-    console.log("App mount")
-    if (this.state.token) {
-      this.getUser()
+export class App extends BaseApp {
+  constructor(props) {
+    super(props)
+    this.state = {
+      status: false,
+      url: 'http://localhost:8000/balls/results/',
+      token: this.props.cookies.get('token'),
+      user: {username: ""},
+      current_lang: this.props.cookies.get('language') || 'en',
+      newGame: false,
+      level: 1,
+      ballsCount: 12,
+      speed: 3,
+      targetBallsCount: 4,
+      radius: 50,
+      playedGames: 0,
+      countOfGames: 2,
     }
   }
-  changeLanguage = () => {
-    let { current_lang } = this.state
-    current_lang = (current_lang === 'ru') ? 'en' : 'ru'
-    this.props.cookies.set('language', current_lang, { path: '/' })
-    this.setState({ current_lang })
+
+  getUserSuccess = (data) => {
+    this.setState({
+      status: true,
+      user: {username: data.username},
+      level: data.current_level.level,
+      ballsCount: data.current_level.balls,
+      speed: data.current_level.speed,
+      targetBallsCount: data.current_level.red_balls,
+      results: data.results,
+    })
   }
+
+  generateResult = () => {
+    const { ballsCount, targetBallsCount, targetBalls, selectedBalls, level, speed, radius } = this.state
+    let trueBalls = 0
+    let falseBalls = 0
+    let clickedBalls = {}
+    for (let ball of selectedBalls) {
+      (ball.id>=ballsCount-targetBallsCount) ? trueBalls++ : falseBalls++
+      clickedBalls[ball.id] = { x: (ball.x).toFixed(3), y: (ball.y).toFixed(3) }
+    }
+    const result = {
+      success:       trueBalls===targetBallsCount && falseBalls===0,
+      level:         level,
+      true_balls:    trueBalls,
+      false_balls:   falseBalls,
+      balls:         ballsCount,
+      red_balls:     targetBallsCount,
+      target_balls:  targetBalls,
+      clicked_balls: clickedBalls,
+      speed:         speed,
+      radius:        radius,
+    }
+    this.saveResult(result)
+  }
+
+  saveResultSuccess = (data) => {
+    const { startNewGame, playedGames, countOfGames } = this.state
+    const { level, balls, speed, red_balls } = data.current_level
+    this.setState({ level, ballsCount: balls, speed, targetBalls: red_balls, results: data.results }, () => {
+      if (playedGames+1 === countOfGames) {
+        this.setState({ newGame: false, playedGames: 0 }, startNewGame)
+      } else {
+        this.setState({ playedGames: playedGames+1 }, startNewGame)
+      }
+    })
+  }
+
+  newGameButtonClick = () => {
+    const { startNewGame } = this.state
+    this.setState({ newGame: true }, startNewGame)
+  }
+
   render() {
-    const { current_lang, status, current_level, results, newGame, token } = this.state
+    const {
+      newGame,
+      ballsCount,
+      targetBallsCount,
+      speed,
+      level,
+      radius,
+      playedGames,
+      countOfGames,
+      current_lang,
+      status,
+      results,
+      user,
+      token,
+    } = this.state
     return (
       <div className="w-100 h-100 d-flex">
         <Menu
           token={token}
-          current_level={current_level}
+          current_level={{ level, balls: ballsCount, speed, red_balls: targetBallsCount }}
+          radius={radius}
           status={status}
-          lang={lang[current_lang]} />
+          lang={lang[current_lang]}
+          newGameButtonClick={this.newGameButtonClick}
+        />
         <Filter
-          user={this.state.user}
+          newGame={newGame}
+          user={user}
           results={results}
           status={status}
           current_lang={current_lang}
           lang={lang[current_lang]}
           changeLanguage={this.changeLanguage}
-          ref={ref => window.filterComponent = ref} />
+          Result={Result}
+        />
+        <P5Wrapper
+          p5Props={{
+            newGame,
+            ballsCount,
+            targetBallsCount,
+            speed,
+            level,
+            radius,
+            playedGames,
+            countOfGames,
+            generateResult: this.generateResult
+          }}
+          sketch={sketch}
+          onSetAppState={this.onSetAppState}
+        />
       </div>
     )
   }
-}
+};
 
 export default withCookies(App);
