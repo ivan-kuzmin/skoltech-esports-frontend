@@ -25,8 +25,6 @@ class App extends Component {
       user: {username: ''},
       token: cookies.get('token'),
       visibleMenu: false,
-      unhiddenMenuWidth: '300px',
-      hiddenMenuWidth: '60px',
     }
   }
   toggleMenu = () => {
@@ -104,7 +102,7 @@ class App extends Component {
     })
   }
   render() {
-    const { visibleMenu, hiddenMenuWidth, unhiddenMenuWidth } = this.state
+    const { visibleMenu } = this.state
     return (
       <div style={{background: 'rgba(0, 0, 0, 0.5)'}}>
         <HashRouter>
@@ -120,11 +118,9 @@ class App extends Component {
                 <NavbarMenu
                   toggleMenu={this.toggleMenu}
                   visibleMenu={visibleMenu}
-                  hiddenMenuWidth={hiddenMenuWidth}
-                  unhiddenMenuWidth={unhiddenMenuWidth}
                 />
                 {visibleMenu && <MenuFilter onClick={this.toggleMenu} />}
-                <Col className="pt-4" style={{overflow: 'hidden', marginLeft: hiddenMenuWidth}}>
+                <Col className="pt-4" style={{overflow: 'hidden', marginLeft: '60px'}}>
                   <Route path="/" exact component={() => <Redirect from="/" to="/home" />} />
                   <Route path="/home" exact component={HomeScreen} />
                   {/* <Route path="/home/balls" component={Balls} /> */}

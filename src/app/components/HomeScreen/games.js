@@ -48,6 +48,33 @@ const games = [
     subtitle: 'Card subtitle',
     description: 'Description.',
   },
+  {
+    id: 5,
+    link: '/games/keys_reaction_test',
+    status: '',
+    image: '',
+    title: 'Keys Reaction Test',
+    subtitle: 'Card subtitle',
+    description: 'Description.',
+  },
+  {
+    id: 6,
+    link: '/games/mouse_tracking',
+    status: '',
+    image: '',
+    title: 'Mouse Tracking',
+    subtitle: 'Card subtitle',
+    description: 'Description.',
+  },
+  {
+    id: 7,
+    link: '/games/mouse_aiming',
+    status: '',
+    image: '',
+    title: 'Mouse Aiming',
+    subtitle: 'Card subtitle',
+    description: 'Description.',
+  },
 ];
 
 export default games;
