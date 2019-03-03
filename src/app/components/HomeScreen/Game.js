@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 // import { Link } from 'react-router-dom'
-import { Card, CardImg, CardTitle, CardText, CardSubtitle, CardBody } from 'reactstrap';
-import styled from 'styled-components'
+import { Card, CardTitle, CardText, CardBody } from 'reactstrap';
+import { CheckCircle, AlertCircle } from 'react-feather';
+import styled from 'styled-components';
 
 const CardContainer = styled(Card)`
   transition: 0.3s;
@@ -25,15 +26,28 @@ class Game extends Component {
   goToGame(link) {
     window.location.href = link
   }
+  statusIcon = () => {
+    switch (this.props.status) {
+      case "done":
+        return <CheckCircle className="text-success" />
+      case "danger":
+        return <AlertCircle className="text-danger" />
+      default:
+        return <div />
+    }
+  }
   render = () => {
-    const { link, image, title, description } = this.props
+    const { link, title, description } = this.props
     return (
       <CardContainer onClick={() => this.goToGame(link)} className="mb-4 border-0">
-        <CardImg top width="100%" style={{minHeight: '170px'}} src={image} alt="Card image cap" />
+        {/* <CardImg top width="100%" style={{minHeight: '170px'}} src={image} alt="Card image cap" /> */}
         <CardBody>
+          <div style={{position: 'absolute', top: '10px', right: '10px'}}>
+            {this.statusIcon()}
+          </div>
           <CardTitle className="text-capitalize font-weight-bold" dangerouslySetInnerHTML={{__html: title}}></CardTitle>
           {/* <CardSubtitle dangerouslySetInnerHTML={{__html: subtitle}}></CardSubtitle> */}
-          <CardText dangerouslySetInnerHTML={{__html: description}}></CardText>
+          <CardText className="small" style={{minHeight: '70px'}} dangerouslySetInnerHTML={{__html: description}}></CardText>
         </CardBody>
       </CardContainer>
   )}

@@ -1,3 +1,20 @@
 {
-  "extends": "react-app"
+  "extends": [
+    "airbnb",
+    "react-app",
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-danger": false,
+    "react/require-default-props": false,
+    "import/no-unresolved": false,
+    "func-names": ["error", "never"],
+    "no-param-reassign": ["error", { "props": false }],
+    "space-infix-ops": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "camelcase": 0,
+    "react/prop-types": [2, { ignore: ["cookies"] }],
+    "no-console": [1, { allow: ["warn", "error"] }],
+    "prefer-destructuring": ["error", { "array": false }]
+  }
 }

@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
   en: {
     header: 'Instruction',
     description: 'You need remember the red balls, then they will change color to blue and you need follow them.',
@@ -9,7 +9,7 @@ export const lang = {
     balls_radius: 'Balls Radius',
     new_game: 'New Game',
     home: 'Home',
-    last_results: 'Your last results'
+    last_results: 'Your last results',
   },
   ru: {
     header: 'Инструкция',
@@ -21,6 +21,8 @@ export const lang = {
     balls_radius: 'Радиус',
     new_game: 'Новая игра',
     home: 'Домой',
-    last_results: 'Ваши последние результаты'
-  }
+    last_results: 'Ваши последние результаты',
+  },
 };
+
+export default lang;

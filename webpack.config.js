@@ -5,22 +5,29 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 module.exports = (env, argv) => {
-  const devMode = argv.mode !== 'production'
-  const buildDir = devMode ? "/dist" : "/build"
+  const devMode = argv.mode !== 'production';
+  const buildDir = path.join(__dirname, devMode ? 'dist' : 'build');
 
-  const games = ['balls', 'reaction_test']
-  const entryGames = {}
-  for (let name of games) {
-    entryGames[name] = `./src/games/${name}/index.js`
+  const games = [
+    'balls',
+    'reaction_test',
+    'reaction_decision_test',
+    'two_hands_coordination',
+    'keyboard_mouse_coordination',
+  ];
+
+  const entryGames = {};
+  for (const name of games) {
+    entryGames[name] = `./src/games/${name}/index.js`;
   }
-  const htmlGames = games.map(name =>
-    new HtmlWebpackPlugin({
+  const htmlGames = games.map(name => new HtmlWebpackPlugin(
+    {
       hash: true,
       template: './src/games/index.html',
       filename: `games/${name}/index.html`,
       chunks: [name],
-    })
-  )
+    },
+  ));
 
   const config = {
     module: {
@@ -29,39 +36,40 @@ module.exports = (env, argv) => {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader"
-          }
+            loader: 'babel-loader',
+          },
         },
         {
           test: /\.css$/,
           use: [
             'style-loader',
             'css-loader',
-          ]
+          ],
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader'
-            }
-          ]
-        }
-      ]
+              loader: 'file-loader',
+            },
+          ],
+        },
+      ],
     },
     devServer: {
-      contentBase: __dirname + buildDir,
+      contentBase: buildDir,
       compress: true,
       port: 9000,
       stats: {
         children: false, // hide children errors
-      }
+      },
     },
+    devtool: 'inline-source-map',
     resolve: {
       alias: {
-        src: path.resolve(__dirname, 'src')
-      }
-    }
+        src: path.resolve(__dirname, 'src'),
+      },
+    },
   };
 
   const gamesConfig = {
@@ -69,7 +77,7 @@ module.exports = (env, argv) => {
     entry: entryGames,
     output: {
       filename: 'games/[name]/index.js',
-      path: __dirname + buildDir,
+      path: buildDir,
     },
     plugins: [
       ...htmlGames,
@@ -83,13 +91,13 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'index.js',
-      path: __dirname + buildDir,
+      path: buildDir,
     },
     plugins: [
       new HtmlWebpackPlugin({
         hash: true,
         template: './src/app/index.html',
-        filename: `index.html`,
+        filename: 'index.html',
         chunks: ['app'],
       }),
       new CleanWebpackPlugin('dist', {}),
@@ -97,4 +105,4 @@ module.exports = (env, argv) => {
   };
 
   return [appConfig, gamesConfig];
-}
+};

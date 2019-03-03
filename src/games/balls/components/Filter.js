@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'
-import Spinner from './Spinner'
-import Language from './Language'
+import styled from 'styled-components';
+import { Spinner } from 'reactstrap';
+import Language from './Language';
 
 const Background = styled.div`
   background: rgba(0,0,0,0.7);
@@ -10,15 +10,15 @@ const Background = styled.div`
   left: 20%;
   width: 80%;
   height: 100%;
-  transform: translateY(${props => props.visible ? '0' : '-100%'});
-  opacity: ${props => props.visible ? '1' : '0'};
-  transition: ${props => props.visible ? '0.4s' : '0'};
+  transform: translateY(${props => (props.visible ? '0' : '-100%')});
+  opacity: ${props => (props.visible ? '1' : '0')};
+  transition: ${props => (props.visible ? '0.4s' : '0')};
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   z-index: 2;
-`
+`;
 
 const ResultsContainer = styled.div`
   min-width: 500px;
@@ -26,7 +26,7 @@ const ResultsContainer = styled.div`
   -webkit-box-shadow: 10px -10px 0px 0px rgba(0,0,0,0.7);
   -moz-box-shadow: 10px -10px 0px 0px rgba(0,0,0,0.7);
   box-shadow: 10px -10px 0px 0px rgba(0,0,0,0.7);
-`
+`;
 
 const Results = styled.div`
   overflow: auto;
@@ -35,40 +35,52 @@ const Results = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`
+`;
 
 const Filter = (props) => {
-  const { lang, changeLanguage, current_lang, status, user, results, Result, newGame } = props
+  const {
+    lang, changeLanguage, current_lang, status, user, results, Result, newGame,
+  } = props;
   return (
     <Background id="filter" visible={!newGame}>
       <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
-        <h3 className="text-center text-uppercase mb-3 font-weight-bold">{lang.last_results}:</h3>
+        <h3 className="text-center text-uppercase mb-3 font-weight-bold">
+          {`${lang.last_results}:`}
+        </h3>
         <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4">
           {
-            status ?
-              <div>
-                <h5 className="mt-2 mb-3">User: {user.username}</h5>
-                <ul className="m-0 p-0" style={{listStylePosition: "inside"}}>
-                  {results.map((result, i) => <Result key={i} result={result} />)}
-                </ul>
-                <div>...</div>
-              </div> :
-              <Spinner />
+            status
+              ? (
+                <div>
+                  <h5 className="mt-2 mb-3">{`User: ${user.username}`}</h5>
+                  <ul className="m-0 p-0" style={{ listStylePosition: 'inside' }}>
+                    {results.map(result => <Result key={result.id} result={result} />)}
+                  </ul>
+                  <div>...</div>
+                </div>
+              )
+              : (
+                <div className="d-flex justify-content-center align-items-center h-75">
+                  <Spinner style={{ width: '3rem', height: '3rem' }} />
+                </div>
+              )
           }
         </Results>
       </ResultsContainer>
       <Language current_lang={current_lang} changeLanguage={changeLanguage} />
     </Background>
-  )
-}
+  );
+};
 
 Filter.propTypes = {
   newGame: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
-  results: PropTypes.array,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+  }).isRequired,
+  results: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.bool.isRequired,
   current_lang: PropTypes.string.isRequired,
-  lang: PropTypes.object.isRequired,
+  lang: PropTypes.objectOf(PropTypes.string).isRequired,
   changeLanguage: PropTypes.func.isRequired,
   Result: PropTypes.func.isRequired,
 };

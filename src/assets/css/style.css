@@ -20,11 +20,3 @@ body {
   /* position: absolute; */
   z-index: 0;
 }
-#canvas {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 80%;
-  left: 20%;
-  top: 0;
-}

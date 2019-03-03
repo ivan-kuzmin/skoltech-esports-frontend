@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
-const Background = styled.div`
+export const Background = styled.div`
   background: rgb(8, 0, 47);
   height: 100%;
   flex: 0 0 20%;
@@ -41,7 +41,6 @@ Menu.propTypes = {
   token: PropTypes.string,
   current_level: PropTypes.objectOf(PropTypes.number).isRequired,
   radius: PropTypes.number.isRequired,
-  status: PropTypes.bool.isRequired,
   lang: PropTypes.object.isRequired,
   newGameButtonClick: PropTypes.func.isRequired,
 };

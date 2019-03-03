@@ -19,7 +19,11 @@ export default class P5Wrapper extends Component {
   }
 
   render() {
-    return <div ref={wrapper => this.wrapper = wrapper} style={{width: '100%', height: '100%'}} />
+    return <div
+      id="canvas-container"
+      className="d-flex justify-content-center align-items-center w-100 h-100 bg-dark"
+      ref={wrapper => this.wrapper = wrapper}
+    />
   }
 };
 
