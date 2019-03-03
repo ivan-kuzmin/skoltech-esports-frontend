@@ -15,7 +15,7 @@ const games = [
   {
     id: 1,
     link: '/games/reaction_test',
-    status: '',
+    status: 'done',
     image: ballsImage1,
     title: 'Reaction test',
     subtitle: 'Card subtitle',

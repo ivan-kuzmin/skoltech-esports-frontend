@@ -17,7 +17,7 @@ const Menu = (props) => {
     <Background className="px-3 py-5">
       <div className="text-light mb-5">
         <h5 className="font-weight-bold text-center">{menu.header}</h5>
-        <p dangerouslySetInnerHTML={{ __html: menu.description }} />
+        {/* <p dangerouslySetInnerHTML={{ __html: menu.description }} /> */}
         <Inputs {...props} />
       </div>
       <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" onClick={newGameButtonClick}>

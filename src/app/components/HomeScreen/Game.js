@@ -1,6 +1,11 @@
-import React, { Component } from "react";
-// import { Link } from 'react-router-dom'
-import { Card, CardTitle, CardText, CardBody } from 'reactstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Card,
+  CardTitle,
+  CardText,
+  CardBody,
+} from 'reactstrap';
 import { CheckCircle, AlertCircle } from 'react-feather';
 import styled from 'styled-components';
 
@@ -20,37 +25,50 @@ const CardContainer = styled(Card)`
     -moz-box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
   }
-`
+`;
 
-class Game extends Component {
-  goToGame(link) {
-    window.location.href = link
+const Game = (props) => {
+  const {
+    status,
+    link,
+    title,
+    description,
+  } = props;
+
+  function goToGame() {
+    window.location.href = link;
   }
-  statusIcon = () => {
-    switch (this.props.status) {
-      case "done":
-        return <CheckCircle className="text-success" />
-      case "danger":
-        return <AlertCircle className="text-danger" />
+
+  function statusIcon() {
+    switch (status) {
+      case 'done':
+        return <CheckCircle className="text-success" />;
+      case 'danger':
+        return <AlertCircle className="text-danger" />;
       default:
-        return <div />
+        return <div />;
     }
   }
-  render = () => {
-    const { link, title, description } = this.props
-    return (
-      <CardContainer onClick={() => this.goToGame(link)} className="mb-4 border-0">
-        {/* <CardImg top width="100%" style={{minHeight: '170px'}} src={image} alt="Card image cap" /> */}
-        <CardBody>
-          <div style={{position: 'absolute', top: '10px', right: '10px'}}>
-            {this.statusIcon()}
-          </div>
-          <CardTitle className="text-capitalize font-weight-bold" dangerouslySetInnerHTML={{__html: title}}></CardTitle>
-          {/* <CardSubtitle dangerouslySetInnerHTML={{__html: subtitle}}></CardSubtitle> */}
-          <CardText className="small" style={{minHeight: '70px'}} dangerouslySetInnerHTML={{__html: description}}></CardText>
-        </CardBody>
-      </CardContainer>
-  )}
-}
+
+  return (
+    <CardContainer onClick={() => goToGame(link)} className="mb-4 border-0">
+      <CardBody>
+        <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+          {statusIcon()}
+        </div>
+        <CardTitle className="text-capitalize font-weight-bold" dangerouslySetInnerHTML={{ __html: title }} />
+        {/* <CardSubtitle dangerouslySetInnerHTML={{__html: subtitle}}></CardSubtitle> */}
+        <CardText className="small" style={{ minHeight: '70px' }} dangerouslySetInnerHTML={{ __html: description }} />
+      </CardBody>
+    </CardContainer>
+  );
+};
+
+Game.propTypes = {
+  status: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
 export default Game;
