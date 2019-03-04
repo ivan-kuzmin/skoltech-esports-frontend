@@ -1,5 +1,6 @@
 // import 'src/assets/js/p5.collide2d.min';
 import pointerLock from 'src/assets/js/pointerLock';
+import { openFullscreen } from 'src/assets/js/fullScreen';
 import Ball from './Ball';
 
 export default function sketch(p) {
@@ -28,13 +29,14 @@ export default function sketch(p) {
     p.background(230);
     p.cursor(p.ARROW);
 
-    p.push();
-    p.strokeWeight(3);
-    p.stroke('red');
-    p.line(p.width/2, 0, p.width/2, p.height);
-    p.pop();
-
     if (p.props.newGame) {
+      // if (document.fullscreen) { p.onSetAppState({ newGame: false }); }
+      p.push();
+      p.strokeWeight(3);
+      p.stroke('red');
+      p.line(p.width/2, 0, p.width/2, p.height);
+      p.pop();
+
       p.lBall.display();
       p.rBall.display();
       if (p.moveBalls) { p.keyBoardMove(); }
@@ -64,6 +66,19 @@ export default function sketch(p) {
     p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 30, 50);
     p.text(`Time: ${(((p.moveBalls ? p.millis() : p.timeOfEnd)-p.timeOfStart)/1000).toFixed(3)}`, 30, 70);
   };
+
+  // ======================================================= FORCE END GAME ON EXIT FULLSCREEN
+  document.addEventListener('fullscreenchange', (event) => {
+    if (!document.fullscreenElement) {
+      p.timeOfStart = 0;
+      p.timeOfEnd = 0;
+      p.startGame = false;
+      p.moveBalls = false;
+      p.leftBalls = [];
+      p.rightBalls = [];
+      p.onSetAppState({ newGame: false, playedGames: 0 });
+    }
+  });
 
   // ======================================================= MOUSE PRESSED FUNCTION
   p.mousePressed = function () {
@@ -148,6 +163,7 @@ export default function sketch(p) {
 
   // ======================================================= START NEW GAME FUNCTION
   function startNewGame() {
+    openFullscreen(p.wrapper);
     p.timeOfStart = 0;
     p.timeOfEnd = 0;
     p.startGame = false;
@@ -197,5 +213,12 @@ export default function sketch(p) {
   }
 
   // ======================================================= ON WINDOW RESIZE FUNCTION
-  p.windowResized = function () { window.location.reload(); };
+  p.windowResized = function () {
+    if (p.props.newGame) {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    } else {
+      p.resizeCanvas(p.wrapper.offsetWidth, p.wrapper.offsetHeight);
+    }
+    if (p.pointerLockIsLocked()) { startNewGame(); }
+  };
 }

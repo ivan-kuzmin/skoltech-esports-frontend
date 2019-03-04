@@ -3,6 +3,7 @@ import { withCookies } from 'react-cookie';
 import P5Wrapper from 'src/games/balls/P5Wrapper';
 import Filter from 'src/games/balls/components/Filter';
 import BaseApp from 'src/games/balls/BaseApp';
+import { closeFullscreen } from 'src/assets/js/fullScreen';
 import { lang } from './lang';
 import Menu from './components/Menu';
 import Result from './components/Result';
@@ -78,7 +79,10 @@ class App extends BaseApp {
       const newGame = (playedGames < countOfGames);
       const count = (playedGames >= countOfGames) ? 0 : (playedGames + 1);
       this.setState({ newGame, playedGames: count, results }, () => {
-        if (newGame) { startNewGame(); } else { document.exitPointerLock(); }
+        if (newGame) { startNewGame(); } else {
+          document.exitPointerLock();
+          closeFullscreen();
+        }
       });
     }, 500);
   }
