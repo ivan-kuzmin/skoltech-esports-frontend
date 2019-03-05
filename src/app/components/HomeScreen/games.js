@@ -1,37 +1,40 @@
+import ballsLang from 'src/games/balls/lang';
+import reactionTestLang from 'src/games/reaction_test/lang';
+import reactionDecisionTestLang from 'src/games/reaction_decision_test/lang';
+import keyboardMouseCoordinationLang from 'src/games/keyboard_mouse_coordination/lang';
+import mouseTrackingLang from 'src/games/mouse_tracking/lang';
 import ballsImage from './balls.png';
 import ballsImage1 from './balls1.png';
 import ballsImage2 from './balls2.png';
 
+const current_lang = 'en';
+
 const games = [
   {
-    id: 0,
     link: '/games/balls',
     status: 'done',
     image: ballsImage,
     title: 'Balls',
     subtitle: 'Card subtitle',
-    description: 'You need remember the red balls, then they will change color to blue and you need follow them.',
+    description: ballsLang[current_lang].description,
   },
   {
-    id: 1,
     link: '/games/reaction_test',
     status: 'done',
     image: ballsImage1,
     title: 'Reaction test',
     subtitle: 'Card subtitle',
-    description: 'A red circle will show up at the center of the screen after a random time. After you see the circle, you should click <i>«Left Mouse»</i> or <i>«Space»</i> button as soon as possible.',
+    description: reactionTestLang[current_lang].description,
   },
   {
-    id: 2,
     link: '/games/reaction_decision_test',
     status: '',
     image: ballsImage2,
     title: 'Reaction + Decision Test',
     subtitle: 'Card subtitle',
-    description: 'A red or blue circle will show up at the center of the screen after a random time. After you see the circle, you should click mouse buttons (red = <i>«Left Click»</i>, blue = <i>«Right Click»</i>) as soon as possible.',
+    description: reactionDecisionTestLang[current_lang].description,
   },
   {
-    id: 3,
     link: '/games/two_hands_coordination',
     status: 'danger',
     image: ballsImage2,
@@ -40,16 +43,14 @@ const games = [
     description: 'Description.',
   },
   {
-    id: 4,
     link: '/games/keyboard_mouse_coordination',
     status: 'done',
     image: '',
     title: 'Keyboard–Mouse coordination',
     subtitle: 'Card subtitle',
-    description: 'Description.',
+    description: keyboardMouseCoordinationLang[current_lang].Menu.description,
   },
   {
-    id: 5,
     link: '/games/keys_reaction_test',
     status: '',
     image: '',
@@ -58,16 +59,14 @@ const games = [
     description: 'Description.',
   },
   {
-    id: 6,
     link: '/games/mouse_tracking',
-    status: '',
+    status: 'done',
     image: '',
     title: 'Mouse Tracking',
     subtitle: 'Card subtitle',
-    description: 'Description.',
+    description: mouseTrackingLang[current_lang].Menu.description,
   },
   {
-    id: 7,
     link: '/games/mouse_aiming',
     status: '',
     image: '',
@@ -76,5 +75,13 @@ const games = [
     description: 'Description.',
   },
 ];
+
+let i = 0;
+for (const game in games) {
+  if (Object.prototype.hasOwnProperty.call(games, game)) {
+    games[game].id = i;
+    i += 1;
+  }
+}
 
 export default games;

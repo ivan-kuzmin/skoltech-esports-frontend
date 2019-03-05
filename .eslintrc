@@ -16,6 +16,6 @@
     "react/prop-types": [2, { ignore: ["cookies"] }],
     "no-console": [1, { allow: ["warn", "error"] }],
     "prefer-destructuring": ["error", { "array": false }],
-    "max-len": ["error", { "code": 150 }]
+    "max-len": ["error", { "code": 150, "ignoreStrings": true }]
   }
 }

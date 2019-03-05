@@ -33,7 +33,7 @@ const Menu = (props) => {
     <Background id="menu" className="px-3 py-5">
       <div className="text-light mb-5">
         <h5 className="font-weight-bold text-center">{lang[current_lang].header}</h5>
-        <p dangerouslySetInnerHTML={{ __html: lang[current_lang].description }} />
+        <p className="small" dangerouslySetInnerHTML={{ __html: lang[current_lang].description }} />
         <div className="btn-group btn-group-sm btn-group-toggle w-100 mb-2" data-toggle="buttons">
           <ButtonGroup className="w-100 small" size="sm" onClick={toggleMode}>
             <Button className={`btn-warning w-50 ${leftMouseMode ? 'active' : ''}`}>Left Mouse</Button>

@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
   en: {
     header: 'Instruction',
     description: 'A red circle will show up at the center of the screen after a random time. After you see the circle, you should click <i>«Left Mouse»</i> or <i>«Space»</i> button as soon as possible.',
@@ -22,3 +22,5 @@ export const lang = {
     last_results: 'Ваши последние результаты'
   }
 }
+
+export default lang;

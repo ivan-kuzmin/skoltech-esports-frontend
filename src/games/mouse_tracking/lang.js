@@ -1,8 +1,8 @@
-const lang = {
+export const lang = {
   en: {
     Menu: {
       header: 'Instruction',
-      description: 'The screen is split into two halves, each half has some random moving red circles. There is one additional circle on each side. For the left side one, it is controlled by keyboard <i>(combinations of "W", "A", "S", "D" keys)</i>, for the right one it is controlled by mouse. You should control both circles at the same time and should avoid moving red circles and the middle line.',
+      description: 'In every trial, a circle will start moving in random speed and direction. You should track the center of the circle using mouse. The speed and direction of the target circle change every few seconds.',
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',

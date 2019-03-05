@@ -27,6 +27,16 @@ const CardContainer = styled(Card)`
   }
 `;
 
+const Description = styled(CardText)`
+  height: 60px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+`;
+
 const Game = (props) => {
   const {
     status,
@@ -57,8 +67,7 @@ const Game = (props) => {
           {statusIcon()}
         </div>
         <CardTitle className="text-capitalize font-weight-bold" dangerouslySetInnerHTML={{ __html: title }} />
-        {/* <CardSubtitle dangerouslySetInnerHTML={{__html: subtitle}}></CardSubtitle> */}
-        <CardText className="small" style={{ minHeight: '70px' }} dangerouslySetInnerHTML={{ __html: description }} />
+        <Description className="small" dangerouslySetInnerHTML={{ __html: description }} />
       </CardBody>
     </CardContainer>
   );

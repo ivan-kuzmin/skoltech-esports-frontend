@@ -3,8 +3,7 @@ import { withCookies } from 'react-cookie';
 import P5Wrapper from 'src/games/balls/P5Wrapper';
 import Filter from 'src/games/balls/components/Filter';
 import BaseApp from 'src/games/balls/BaseApp';
-import { closeFullscreen } from 'src/assets/js/fullScreen';
-import lang from './lang';
+import { lang } from './lang';
 import Menu from './components/Menu';
 import Result from './components/Result';
 import sketch from './sketch';
@@ -14,60 +13,55 @@ class App extends BaseApp {
     super(props);
     this.state = {
       status: false,
-      url: 'http://localhost:8000/keyboard_mouse_coordination/results/',
+      url: 'http://localhost:8000/mouse_tracking/results/',
       token: this.props.cookies.get('token'),
       user: { username: '' },
       current_lang: this.props.cookies.get('language') || 'en',
       newGame: false,
       level: 1,
       speed: 3,
-      radius: 30,
-      ballsCount: 5,
-      keyboardStep: 10,
+      radius: 70,
       playedGames: 0,
       countOfGames: 5,
       sensitivity: 4.3,
       startTime: 0.5,
+      gameTime: 5,
+      timeOnChangeSpeed: 1,
     };
   }
 
   getUserSuccess = (data) => {
     const { username, results } = data;
     let {
-      speed, radius, ballsCount, sensitivity,
+      radius, sensitivity,
     } = this.state;
     if (results.length !== 0) {
-      speed = results[0].speed;
       radius = results[0].radius;
-      ballsCount = results[0].balls;
       sensitivity = results[0].sensitivity;
     }
     this.setState({
       status: true,
       user: { username },
-      speed,
       radius,
-      ballsCount,
       sensitivity,
       results,
     });
   }
 
-  generateResult = (timeOfStart, timeOfEnd, mode) => {
+  generateResult = (ballTrajectory, aimTrajectory) => {
     const {
-      playedGames, countOfGames, speed, radius, ballsCount, keyboardStep, sensitivity,
+      playedGames, countOfGames, speed, radius, sensitivity,
     } = this.state;
-    const time = ((timeOfEnd - timeOfStart)/1000).toFixed(3);
     const result = {
       playedGames,
       countOfGames,
-      time,
-      mode,
       speed,
       radius,
-      ballsCount,
-      keyboardStep,
       sensitivity,
+      trajectories: {
+        ball: ballTrajectory,
+        aim: aimTrajectory,
+      },
     };
     this.saveResult(result);
   }
@@ -81,7 +75,7 @@ class App extends BaseApp {
       this.setState({ newGame, playedGames: count, results }, () => {
         if (newGame) { startNewGame(); } else {
           document.exitPointerLock();
-          closeFullscreen();
+          document.exitFullscreen();
         }
       });
     }, 500);

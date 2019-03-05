@@ -1,6 +1,6 @@
 import React from 'react';
 import { withCookies } from 'react-cookie';
-import { lang } from './lang';
+import lang from './lang';
 import { App as BallsApp } from 'src/games/balls/App';
 import Menu from './components/Menu';
 import Filter from 'src/games/balls/components/Filter';

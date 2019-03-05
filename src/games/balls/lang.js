@@ -1,7 +1,7 @@
 const lang = {
   en: {
     header: 'Instruction',
-    description: 'You need remember the red balls, then they will change color to blue and you need follow them.',
+    description: 'You need to remember the red balls, then they will change color to blue and you need follow them.',
     current_level: 'Current level',
     balls: 'Balls',
     speed: 'Speed',

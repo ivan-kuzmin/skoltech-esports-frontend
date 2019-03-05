@@ -22,7 +22,7 @@ const Menu = (props) => {
     <Background id="menu" className="px-3 py-5">
       <div className="text-light mb-5">
         <h5 className="font-weight-bold text-center">{lang.header}</h5>
-        <p>{lang.description}</p>
+        <p className="small" dangerouslySetInnerHTML={{ __html: lang.description }} />
       </div>
       <div className="text-light mb-5">
         <h5 className="font-weight-bold text-center">{`${lang.current_level} – ${current_level.level}:`}</h5>
