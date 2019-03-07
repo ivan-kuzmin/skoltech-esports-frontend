@@ -2,6 +2,7 @@ import ballsLang from 'src/games/balls/lang';
 import reactionTestLang from 'src/games/reaction_test/lang';
 import reactionDecisionTestLang from 'src/games/reaction_decision_test/lang';
 import keyboardMouseCoordinationLang from 'src/games/keyboard_mouse_coordination/lang';
+import keysReactionTestLang from 'src/games/keys_reaction_test/lang';
 import mouseTrackingLang from 'src/games/mouse_tracking/lang';
 import ballsImage from './balls.png';
 import ballsImage1 from './balls1.png';
@@ -15,7 +16,6 @@ const games = [
     status: 'done',
     image: ballsImage,
     title: 'Balls',
-    subtitle: 'Card subtitle',
     description: ballsLang[current_lang].description,
   },
   {
@@ -23,7 +23,6 @@ const games = [
     status: 'done',
     image: ballsImage1,
     title: 'Reaction test',
-    subtitle: 'Card subtitle',
     description: reactionTestLang[current_lang].description,
   },
   {
@@ -31,7 +30,6 @@ const games = [
     status: '',
     image: ballsImage2,
     title: 'Reaction + Decision Test',
-    subtitle: 'Card subtitle',
     description: reactionDecisionTestLang[current_lang].description,
   },
   {
@@ -39,31 +37,27 @@ const games = [
     status: 'danger',
     image: ballsImage2,
     title: 'Two–Hands Coordination',
-    subtitle: 'Card subtitle',
     description: 'Description.',
   },
   {
     link: '/games/keyboard_mouse_coordination',
     status: 'done',
     image: '',
-    title: 'Keyboard–Mouse coordination',
-    subtitle: 'Card subtitle',
+    title: 'Keyboard–Mouse Coordination',
     description: keyboardMouseCoordinationLang[current_lang].Menu.description,
   },
   {
     link: '/games/keys_reaction_test',
-    status: '',
+    status: 'done',
     image: '',
     title: 'Keys Reaction Test',
-    subtitle: 'Card subtitle',
-    description: 'Description.',
+    description: keysReactionTestLang[current_lang].Menu.description,
   },
   {
     link: '/games/mouse_tracking',
     status: 'done',
     image: '',
     title: 'Mouse Tracking',
-    subtitle: 'Card subtitle',
     description: mouseTrackingLang[current_lang].Menu.description,
   },
   {
@@ -71,16 +65,13 @@ const games = [
     status: '',
     image: '',
     title: 'Mouse Aiming',
-    subtitle: 'Card subtitle',
     description: 'Description.',
   },
 ];
 
-let i = 0;
 for (const game in games) {
   if (Object.prototype.hasOwnProperty.call(games, game)) {
-    games[game].id = i;
-    i += 1;
+    games[game].id = game;
   }
 }
 
