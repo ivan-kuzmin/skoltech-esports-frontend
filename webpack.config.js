@@ -16,6 +16,7 @@ module.exports = (env, argv) => {
     'keyboard_mouse_coordination',
     'keys_reaction_test',
     'mouse_tracking',
+    'mouse_aiming',
   ];
 
   const entryGames = {};
