@@ -5,6 +5,7 @@ import keyboardMouseCoordinationLang from 'src/games/keyboard_mouse_coordination
 import keysReactionTestLang from 'src/games/keys_reaction_test/lang';
 import mouseTrackingLang from 'src/games/mouse_tracking/lang';
 import mouseAimingLang from 'src/games/mouse_aiming/lang';
+import optimalTrajectoryLang from 'src/games/optimal_trajectory/lang';
 import ballsImage from './balls.png';
 import ballsImage1 from './balls1.png';
 import ballsImage2 from './balls2.png';
@@ -67,6 +68,13 @@ const games = [
     image: '',
     title: 'Mouse Aiming',
     description: mouseAimingLang[current_lang].Menu.description,
+  },
+  {
+    link: '/games/optimal_trajectory',
+    status: 'done',
+    image: '',
+    title: 'Optimal Trajectory',
+    description: optimalTrajectoryLang[current_lang].Menu.description,
   },
 ];
 
