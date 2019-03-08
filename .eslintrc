@@ -1,7 +1,7 @@
 {
   "extends": [
     "airbnb",
-    "react-app",
+    "react-app"
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -13,9 +13,10 @@
     "space-infix-ops": 0,
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "camelcase": 0,
-    "react/prop-types": [2, { ignore: ["cookies"] }],
-    "no-console": [1, { allow: ["warn", "error"] }],
+    "react/prop-types": [2, { "ignore": ["cookies"] }],
+    "no-console": [1, { "allow": ["warn", "error"] }],
     "prefer-destructuring": ["error", { "array": false }],
-    "max-len": ["error", { "code": 150, "ignoreStrings": true }]
+    "max-len": ["error", { "code": 150, "ignoreStrings": true }],
+    "template-curly-spacing": 0
   }
 }

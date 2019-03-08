@@ -14,6 +14,7 @@ const lang = {
       count_of_balls: 'Count of balls',
       count_of_trials: 'Count of trials',
       sensitivity: 'Sensitivity',
+      keyboard_step: 'Keyboard Step',
     },
     Filter: {
       last_results: 'Your last results',
@@ -34,6 +35,7 @@ const lang = {
       count_of_balls: 'Количество шаров',
       count_of_trials: 'Количество попыток',
       sensitivity: 'Чувствительность',
+      keyboard_step: 'Шаг клавиатуры',
     },
     Filter: {
       last_results: 'Ваши последние результаты',

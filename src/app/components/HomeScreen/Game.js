@@ -16,6 +16,8 @@ const CardContainer = styled(Card)`
   -webkit-box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
   -moz-box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  backface-visibility: hidden;
+  transform: translateZ(0);
   &:hover {
     svg {
       display: block;

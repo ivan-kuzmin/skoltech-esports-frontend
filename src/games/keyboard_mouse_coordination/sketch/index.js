@@ -1,9 +1,11 @@
 // import 'src/assets/js/p5.collide2d.min';
 import pointerLock from 'src/assets/js/pointerLock';
+import createStats from 'src/assets/js/createStats';
 import { openFullscreen } from 'src/assets/js/fullScreen';
 import Ball from './Ball';
 
 export default function sketch(p) {
+  const stats = createStats();
   p.props = {};
   p.fps = 0;
   p.timeOfStart = 0;
@@ -26,6 +28,7 @@ export default function sketch(p) {
 
   // ======================================================= DRAW FUNCTION
   p.draw = function () {
+    for (const stat of stats) { stat.update(); }
     p.background(230);
     p.cursor(p.ARROW);
 
@@ -62,9 +65,8 @@ export default function sketch(p) {
     }
 
     if (p.frameCount%20 === 0) { p.fps = p.frameRate(); }
-    p.text(`FPS: ${p.fps.toFixed(1)}`, 30, 30);
-    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 30, 50);
-    p.text(`Time: ${(((p.moveBalls ? p.millis() : p.timeOfEnd)-p.timeOfStart)/1000).toFixed(3)}`, 30, 70);
+    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 20, p.wrapper.offsetHeight-20);
+    p.text(`Time: ${(((p.moveBalls ? p.millis() : p.timeOfEnd)-p.timeOfStart)/1000).toFixed(3)}`, 20, p.wrapper.offsetHeight-40);
   };
 
   // ======================================================= FORCE END GAME ON EXIT FULLSCREEN
@@ -83,8 +85,8 @@ export default function sketch(p) {
   // ======================================================= MOUSE PRESSED FUNCTION
   p.mousePressed = function () {
     if (!p.pointerLockIsLocked() && p.props.newGame && !p.startGame
-        && p.mouseX > 0 && p.mouseX < p.width
-        && p.mouseY > 0 && p.mouseY < p.height) {
+      && p.mouseX > 0 && p.mouseX < p.width
+      && p.mouseY > 0 && p.mouseY < p.height) {
       startNewGame();
       startTimer();
     }

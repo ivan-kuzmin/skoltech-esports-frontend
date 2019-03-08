@@ -14,7 +14,7 @@ const Menu = (props) => {
   const { Menu: menu } = lang[current_lang];
 
   return (
-    <Background className="px-3 py-5">
+    <Background className="px-3 py-4">
       <div className="text-light mb-5">
         <h5 className="font-weight-bold text-center">{menu.header}</h5>
         <p className="small" dangerouslySetInnerHTML={{ __html: menu.description }} />

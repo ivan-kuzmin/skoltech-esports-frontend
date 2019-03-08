@@ -13,6 +13,7 @@ const Inputs = (props) => {
     sensitivity,
     changeGameSettings,
     current_lang,
+    keyboardStep,
   } = props;
   const { Inputs: inputs } = lang[current_lang];
 
@@ -29,6 +30,8 @@ const Inputs = (props) => {
       <Input disabled={newGame} className="custom-range border-0 mb-2" style={{ background: 'none' }} type="range" bsSize="sm" min="1" max="25" step="1" value={countOfGames} onChange={e => changeGameSettings(e, 'countOfGames')} />
       {`${inputs.sensitivity}: ${sensitivity.toFixed(1)}`}
       <Input disabled={newGame} className="custom-range border-0 mb-2" style={{ background: 'none' }} type="range" bsSize="sm" min="1" max="15" step="0.1" value={sensitivity} onChange={e => changeGameSettings(e, 'sensitivity')} />
+      {`${inputs.keyboard_step}: ${keyboardStep}`}
+      <Input disabled={newGame} className="custom-range border-0 mb-2" style={{ background: 'none' }} type="range" bsSize="sm" min="1" max="40" step="1" value={keyboardStep} onChange={e => changeGameSettings(e, 'keyboardStep')} />
       {/* eslint-enable */}
     </div>
   );
@@ -42,6 +45,7 @@ Inputs.propTypes = {
   ballsCount: PropTypes.number.isRequired,
   countOfGames: PropTypes.number.isRequired,
   sensitivity: PropTypes.number.isRequired,
+  keyboardStep: PropTypes.number.isRequired,
   changeGameSettings: PropTypes.func.isRequired,
 };
 

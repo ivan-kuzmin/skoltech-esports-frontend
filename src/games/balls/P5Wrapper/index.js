@@ -24,7 +24,7 @@ export default class P5Wrapper extends Component {
     return (
       <div
         id="canvas-container"
-        className="d-flex justify-content-start align-items-start w-100 h-100 bg-dark"
+        className="d-flex justify-content-start align-items-start w-100 h-100 bg-dark position-relative"
         ref={(wrapper) => { this.wrapper = wrapper; }}
       />
     );

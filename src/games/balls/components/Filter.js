@@ -12,7 +12,7 @@ const Background = styled.div`
   height: 100%;
   transform: translateY(${props => (props.visible ? '0' : '-100%')});
   opacity: ${props => (props.visible ? '1' : '0')};
-  transition: ${props => (props.visible ? '0.4s' : '0')};
+  ${''/* transition: ${props => (props.visible ? '0.4s' : '0')}; */}
   display: flex;
   justify-content: center;
   align-items: center;
