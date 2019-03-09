@@ -28,7 +28,10 @@ export default function sketch(p) {
 
   // ======================================================= DRAW FUNCTION
   p.draw = function () {
-    for (const stat of stats) { stat.update(); }
+    for (const stat of stats) {
+      stat.domElement.style.opacity = p.props.newGame ? 0.5 : 1;
+      stat.update();
+    }
     p.background(230);
     p.cursor(p.ARROW);
 
@@ -78,6 +81,7 @@ export default function sketch(p) {
       p.moveBalls = false;
       p.leftBalls = [];
       p.rightBalls = [];
+      clearInterval(p.timeOut1);
       p.onSetAppState({ newGame: false, playedGames: 0 });
     }
   });
@@ -200,7 +204,7 @@ export default function sketch(p) {
   // ======================================================= START TIMER FUNCTION
   function startTimer() {
     p.startGame = true;
-    setTimeout(() => {
+    p.timeOut1 = setTimeout(() => {
       p.moveBalls = true;
       p.timeOfStart = p.millis();
     }, 1000*p.props.startTime);
