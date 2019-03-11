@@ -96,10 +96,10 @@ export default function sketch(p) {
           if (d <= p.props.radius && !ball.visited) {
             ball.fill = 'blue';
             ball.visited = true;
-            const time = p.millis() - p.timeOfStart;
-            p.clicks.push({ x: p.aim.x, y: p.aim.y, time });
           }
         }
+        const time = p.millis() - p.timeOfStart;
+        p.clicks.push({ x: p.aim.x, y: p.aim.y, time });
       }
       if (p.clicks.length === p.props.ballsCount) {
         p.timeOfEnd = p.millis();
