@@ -12,8 +12,8 @@ export default function Ball(p, x, y, radius, color) {
   this.move = () => {
     this.x += this.xspeed * this.xdirection * p.props.speed;
     this.y += this.yspeed * this.ydirection * p.props.speed;
-    if (this.x > this.maxX || this.x < this.minX) { this.xdirection *= -1; }
-    if (this.y > p.maxY || this.y < p.minY) { this.ydirection *= -1; }
+    if (this.x >= this.maxX || this.x <= this.minX) { this.xdirection *= -1; }
+    if (this.y >= p.maxY || this.y <= p.minY) { this.ydirection *= -1; }
   };
 
   this.display = () => {

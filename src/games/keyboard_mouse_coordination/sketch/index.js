@@ -7,14 +7,13 @@ import Ball from './Ball';
 export default function sketch(p) {
   const stats = createStats();
   p.props = {};
-  p.fps = 0;
   p.timeOfStart = 0;
   p.timeOfEnd = 0;
   p.cs_go_coefficient = 0.2745;
 
   // ======================================================= SETUP FUNCTION
   p.setup = function () {
-    p.createCanvas(p.wrapper.offsetWidth, p.wrapper.offsetHeight);
+    p.createCanvas(p.displayWidth, p.displayHeight);
     p.frameRate(60);
     p.ellipseMode(p.RADIUS);
     p.textFont('Courier New');
@@ -67,7 +66,6 @@ export default function sketch(p) {
       if (!p.pointerLockIsLocked()) { drawFilter(); }
     }
 
-    if (p.frameCount%20 === 0) { p.fps = p.frameRate(); }
     p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 20, p.wrapper.offsetHeight-20);
     p.text(`Time: ${(((p.moveBalls ? p.millis() : p.timeOfEnd)-p.timeOfStart)/1000).toFixed(3)}`, 20, p.wrapper.offsetHeight-40);
   };
@@ -101,20 +99,20 @@ export default function sketch(p) {
     if (p.moveBalls) {
       if (y < 0) { // MOUSE UP
         const nextY = p.rBall.y + y*p.props.sensitivity*p.cs_go_coefficient;
-        p.rBall.y = (nextY > p.minY) ? nextY : p.minY;
+        p.rBall.y = (nextY >= p.minY) ? nextY : p.minY;
       }
       if (y > 0) { // MOUSE DOWN
         const nextY = p.rBall.y + y*p.props.sensitivity*p.cs_go_coefficient;
-        p.rBall.y = (nextY < p.maxY) ? nextY : p.maxY;
+        p.rBall.y = (nextY <= p.maxY) ? nextY : p.maxY;
       }
       if (x < 0) { // MOUSE LEFT
         const nextX = p.rBall.x + x*p.props.sensitivity*p.cs_go_coefficient;
-        p.rBall.x = (nextX > p.rminX) ? nextX : p.rminX;
+        p.rBall.x = (nextX >= p.rminX) ? nextX : p.rminX;
         if (nextX < p.rminX) { endGame('Mouse'); }
       }
       if (x > 0) { // MOUSE RIGHT
         const nextX = p.rBall.x + x*p.props.sensitivity*p.cs_go_coefficient;
-        p.rBall.x = (nextX < p.rmaxX) ? nextX : p.rmaxX;
+        p.rBall.x = (nextX <= p.rmaxX) ? nextX : p.rmaxX;
       }
     }
   };
@@ -123,19 +121,19 @@ export default function sketch(p) {
   p.keyBoardMove = function () {
     if (p.keyIsDown(87)) { // W
       const nextY = p.lBall.y - p.props.keyboardStep;
-      p.lBall.y = (nextY > p.minY) ? nextY : p.minY;
+      p.lBall.y = (nextY >= p.minY) ? nextY : p.minY;
     }
     if (p.keyIsDown(83)) { // S
       const nextY = p.lBall.y + p.props.keyboardStep;
-      p.lBall.y = (nextY < p.maxY) ? nextY : p.maxY;
+      p.lBall.y = (nextY <= p.maxY) ? nextY : p.maxY;
     }
     if (p.keyIsDown(65)) { // A
       const nextX = p.lBall.x - p.props.keyboardStep;
-      p.lBall.x = (nextX > p.lminX) ? nextX : p.lminX;
+      p.lBall.x = (nextX >= p.lminX) ? nextX : p.lminX;
     }
     if (p.keyIsDown(68)) { // D
       const nextX = p.lBall.x + p.props.keyboardStep;
-      p.lBall.x = (nextX < p.lmaxX) ? nextX : p.lmaxX;
+      p.lBall.x = (nextX <= p.lmaxX) ? nextX : p.lmaxX;
       if (nextX > p.lmaxX) { endGame('Keyboard'); }
     }
   };
@@ -157,10 +155,10 @@ export default function sketch(p) {
   function createBall(minX, maxX, centerBall, ballsArray) {
     const ball = new Ball(p, p.random(minX, maxX), p.random(p.minY, p.maxY), p.props.radius, 'red');
     const dCenter = p.dist(ball.x, ball.y, centerBall.x, centerBall.y);
-    if (dCenter < ball.radius + 3*centerBall.radius) { return; }
+    if (dCenter <= ball.radius + 3*centerBall.radius) { return; }
     for (let j=0; j<ballsArray.length; j++) {
       const d = p.dist(ball.x, ball.y, ballsArray[j].x, ballsArray[j].y);
-      if (d < ball.radius + ballsArray[j].radius) { return; }
+      if (d <= ball.radius + ballsArray[j].radius) { return; }
     }
     ball.minX = minX;
     ball.maxX = maxX;
@@ -217,14 +215,4 @@ export default function sketch(p) {
     p.timeOfEnd = p.millis();
     p.props.generateResult(p.timeOfStart, p.timeOfEnd, mode);
   }
-
-  // ======================================================= ON WINDOW RESIZE FUNCTION
-  p.windowResized = function () {
-    if (p.props.newGame) {
-      p.resizeCanvas(p.windowWidth, p.windowHeight);
-    } else {
-      p.resizeCanvas(p.wrapper.offsetWidth, p.wrapper.offsetHeight);
-    }
-    if (p.pointerLockIsLocked()) { startNewGame(); }
-  };
 }
