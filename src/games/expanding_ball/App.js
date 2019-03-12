@@ -89,6 +89,7 @@ class App extends BaseApp {
           {...this.state}
           current_level={{ level }}
           newGameButtonClick={this.newGameButtonClick}
+          goHome={this.goHome}
         />
         <Filter
           {...this.state}

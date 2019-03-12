@@ -66,6 +66,7 @@ export class App extends BaseApp {
           current_level={{ level }}
           lang={lang[current_lang]}
           newGameButtonClick={this.newGameButtonClick}
+          goHome={this.goHome}
         />
         <Filter
           newGame={newGame}

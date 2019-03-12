@@ -11,6 +11,7 @@ const Menu = (props) => {
     newGameButtonClick,
     current_lang,
     newGame,
+    goHome,
   } = props;
   const { Menu: menu } = lang[current_lang];
 
@@ -24,9 +25,7 @@ const Menu = (props) => {
       <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" onClick={newGameButtonClick}>
         {menu.new_game}
       </Button>
-      <a href="/" role="button" className="btn btn-warning w-100 text-uppercase">
-        {menu.home}
-      </a>
+      <Button onClick={goHome} className="btn btn-warning w-100 text-uppercase">{menu.home}</Button>
     </Background>
   );
 };
@@ -41,6 +40,7 @@ Menu.propTypes = {
   countOfGames: PropTypes.number.isRequired,
   sensitivity: PropTypes.number.isRequired,
   changeGameSettings: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
 };
 
 export default Menu;

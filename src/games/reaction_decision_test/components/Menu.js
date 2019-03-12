@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap'
 
 const Menu = (props) => {
-  const { lang, token, newGameButtonClick } = props
+  const { lang, token, newGameButtonClick, goHome } = props
   const current_level = props.current_level
   return (
     <Background className="px-3 py-5">
@@ -17,7 +17,7 @@ const Menu = (props) => {
         <h5 className="font-weight-bold text-center">{`${lang.current_level} – ${current_level.level}:`}</h5>
       </div>
       <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" onClick={newGameButtonClick}>{lang.new_game}</Button>
-      <a href="/" role="button" className="btn btn-warning w-100 text-uppercase">{lang.home}</a>
+      <Button onClick={goHome} className="btn btn-warning w-100 text-uppercase">{lang.home}</Button>
     </Background>
   )
 }
@@ -28,6 +28,7 @@ Menu.propTypes = {
   radius: PropTypes.number.isRequired,
   lang: PropTypes.object.isRequired,
   newGameButtonClick: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
 };
 
 export default Menu;

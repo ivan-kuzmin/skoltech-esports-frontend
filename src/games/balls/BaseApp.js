@@ -38,6 +38,11 @@ class BaseApp extends Component {
     this.setState({ current_lang });
   }
 
+  goHome = () => {
+    const url = window.location.href;
+    window.location.href = url.split('games')[0];
+  };
+
   onSetAppState = (newState, callback) => this.setState(newState, callback)
 }
 

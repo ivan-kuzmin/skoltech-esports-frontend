@@ -14,10 +14,18 @@ export const Background = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`
+`;
 
 const Menu = (props) => {
-  const { lang, token, current_level, radius, newGameButtonClick } = props
+  const {
+    lang,
+    token,
+    current_level,
+    radius,
+    newGameButtonClick,
+    goHome,
+  } = props;
+
   return (
     <Background id="menu" className="px-3 py-5">
       <div className="text-light mb-5">
@@ -31,10 +39,10 @@ const Menu = (props) => {
         <div>{`${lang.red_balls}: ${current_level.red_balls}`}</div>
         <div>{`${lang.balls_radius}: ${radius}`}</div>
       </div>
-      <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" id="newGameButton" onClick={newGameButtonClick}>{lang.new_game}</Button>
-      <a href="/" role="button" className="btn btn-warning w-100 text-uppercase" id="backButton">{lang.home}</a>
+      <Button className="btn btn-warning w-100 mb-1 text-uppercase" id="newGameButton" onClick={newGameButtonClick}>{lang.new_game}</Button>
+      <Button onClick={goHome} className="btn btn-warning w-100 text-uppercase">{lang.home}</Button>
     </Background>
-  )
+  );
 };
 
 Menu.propTypes = {
@@ -43,6 +51,7 @@ Menu.propTypes = {
   radius: PropTypes.number.isRequired,
   lang: PropTypes.object.isRequired,
   newGameButtonClick: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
 };
 
 export default Menu;

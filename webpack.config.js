@@ -20,6 +20,7 @@ module.exports = (env, argv) => {
     'optimal_trajectory',
     'visual_search_with_time_limit',
     'expanding_ball',
+    'memory_test',
   ];
 
   const entryGames = {};

@@ -1,7 +1,7 @@
 const lang = {
   en: {
     header: 'Instruction',
-    description: 'You need to remember the red balls, then they will change color to blue and you need follow them.',
+    description: 'A number of blue circles is first shown to you. Among them half of the circles are randomly selected as «Targets» and indicated for you by red color. Then, all circles turn blue again and start moving with random direction and speed. All circles stop moving after few seconds, and you should identify which of the circles are the «Targets».',
     current_level: 'Current level',
     balls: 'Balls',
     speed: 'Speed',
@@ -13,7 +13,7 @@ const lang = {
   },
   ru: {
     header: 'Инструкция',
-    description: 'Вам необходимо запомнить шары красного цвета, затем они сменят цвет на синий, и Вам необходимо проследить за ними.',
+    description: '---',
     current_level: 'Текущий уровень',
     balls: 'Количество шаров',
     speed: 'Скорость',

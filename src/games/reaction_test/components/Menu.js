@@ -27,6 +27,7 @@ const Menu = (props) => {
     countOfGames,
     newGame,
     changeGameSettings,
+    goHome,
   } = props;
 
   return (
@@ -46,7 +47,7 @@ const Menu = (props) => {
         </div>
       </div>
       <Button hidden={!token} className="btn btn-warning w-100 mb-1 text-uppercase" onClick={newGameButtonClick}>{lang[current_lang].new_game}</Button>
-      <a href="/" role="button" className="btn btn-warning w-100 text-uppercase" id="backButton">{lang[current_lang].home}</a>
+      <Button onClick={goHome} className="btn btn-warning w-100 text-uppercase">{lang[current_lang].home}</Button>
     </Background>
   );
 };
@@ -60,6 +61,7 @@ Menu.propTypes = {
   countOfGames: PropTypes.number.isRequired,
   newGame: PropTypes.bool.isRequired,
   changeGameSettings: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
 };
 
 export default Menu;

@@ -127,6 +127,7 @@ export class App extends BaseApp {
           radius={radius}
           lang={lang[current_lang]}
           newGameButtonClick={this.newGameButtonClick}
+          goHome={this.goHome}
         />
         <Filter
           newGame={newGame}

@@ -93,6 +93,7 @@ class App extends BaseApp {
           {...this.state}
           newGameButtonClick={this.newGameButtonClick}
           changeGameSettings={this.changeGameSettings}
+          goHome={this.goHome}
         />
         <Filter
           {...this.state}
