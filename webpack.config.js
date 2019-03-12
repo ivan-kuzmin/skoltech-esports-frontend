@@ -19,6 +19,7 @@ module.exports = (env, argv) => {
     'mouse_aiming',
     'optimal_trajectory',
     'visual_search_with_time_limit',
+    'expanding_ball',
   ];
 
   const entryGames = {};

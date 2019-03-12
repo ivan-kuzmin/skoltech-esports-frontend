@@ -19,48 +19,33 @@ class App extends BaseApp {
       user: { username: 'Unknown' },
       current_lang: this.props.cookies.get('language') || 'en',
       newGame: false,
-      matrixSize: 20,
-      letterSize: 20,
       playedGames: 0,
       countOfGames: 5,
       startTime: 0.5,
-      gameTime: 3,
     };
   }
 
   getUserSuccess = (data) => {
     const { username, results } = data;
-    let {
-      matrixSize, letterSize, gameTime,
-    } = this.state;
-    if (results.length !== 0) {
-      matrixSize = results[0].matrix_size;
-      letterSize = results[0].letter_size;
-      gameTime = results[0].game_time;
-    }
     this.setState({
       status: true,
       user: { username },
-      matrixSize,
-      letterSize,
-      gameTime,
       results,
     });
   }
 
-  generateResult = (success, timeOfStart, timeOfEnd) => {
+  generateResult = (success, ball) => {
     const {
-      playedGames, countOfGames, matrixSize, letterSize, gameTime, results,
+      playedGames, countOfGames, results,
     } = this.state;
-    const time = ((timeOfEnd - timeOfStart) / 1000).toFixed(3);
     const result = {
       playedGames,
       countOfGames,
       success,
-      matrixSize,
-      letterSize,
-      gameTime,
-      time,
+      startRadius: ball.startRadius,
+      ballRadius: ball.radius,
+      contourRadius: ball.contour,
+      speed: ball.speed,
     };
     // this.saveResult(result);
     const today = new Date();
@@ -95,10 +80,6 @@ class App extends BaseApp {
     this.setState({ newGame: true, playedGames }, startNewGame);
   }
 
-  changeGameSettings = (event, name) => {
-    this.setState({ [name]: +event.target.value });
-  }
-
   render() {
     const { level, current_lang } = this.state;
     const { generateResult } = this;
@@ -108,7 +89,6 @@ class App extends BaseApp {
           {...this.state}
           current_level={{ level }}
           newGameButtonClick={this.newGameButtonClick}
-          changeGameSettings={this.changeGameSettings}
         />
         <Filter
           {...this.state}

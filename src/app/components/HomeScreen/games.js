@@ -7,6 +7,7 @@ import mouseTrackingLang from 'src/games/mouse_tracking/lang';
 import mouseAimingLang from 'src/games/mouse_aiming/lang';
 import optimalTrajectoryLang from 'src/games/optimal_trajectory/lang';
 import visualSearchWithTimeLimitLang from 'src/games/visual_search_with_time_limit/lang';
+import expandingBallLang from 'src/games/expanding_ball/lang';
 import ballsImage from './balls.png';
 import ballsImage1 from './balls1.png';
 import ballsImage2 from './balls2.png';
@@ -83,6 +84,13 @@ const games = [
     image: '',
     title: 'Visual Search with Time Limit',
     description: visualSearchWithTimeLimitLang[current_lang].Menu.description,
+  },
+  {
+    link: '/games/expanding_ball',
+    status: 'done',
+    image: '',
+    title: 'Expanding Ball',
+    description: expandingBallLang[current_lang].Menu.description,
   },
 ];
 
