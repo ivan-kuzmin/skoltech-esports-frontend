@@ -2,7 +2,7 @@
   "name": "webpack",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Ivan Kuzmin",
+  "author": "https://ivan-kuzmin.github.io/",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --mode development",
