@@ -6,25 +6,22 @@ import Result from './components/Result';
 import sketch from './sketch';
 
 class App extends BaseApp {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      current_lang: this.props.cookies.get('language') || 'en',
-      results: [],
-      newGame: false,
-      game: {
-        speed: 3,
-        radius: 70,
-        playedGames: 0,
-        countOfGames: 5,
-        sensitivity: 4.3,
-        startTime: 0.5,
-        gameTime: 5,
-        timeOnChangeSpeed: 1,
-      },
-    };
-  }
+  state = {
+    isLoading: true,
+    current_lang: this.props.cookies.get('language') || 'en',
+    results: [],
+    newGame: false,
+    game: {
+      speed: 3,
+      radius: 70,
+      playedGames: 0,
+      countOfGames: 5,
+      sensitivity: 4.3,
+      startTime: 0.5,
+      gameTime: 5,
+      timeOnChangeSpeed: 1,
+    },
+  };
 
   generateResult = (ballTrajectory, aimTrajectory) => {
     const { results, user } = this.state;

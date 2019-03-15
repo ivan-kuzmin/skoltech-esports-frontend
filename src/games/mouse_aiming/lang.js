@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
   en: {
     Menu: {
       header: 'Instruction',

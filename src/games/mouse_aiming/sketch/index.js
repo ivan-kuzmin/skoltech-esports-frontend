@@ -52,7 +52,7 @@ export default function sketch(p) {
         drawLoadingLine();
         if (p.moveBall) {
           p.ball.display();
-          p.aimTrajectory.push({ x: p.aim.x, y: p.aim.y });
+          p.aimTrajectory.push({ x: (p.aim.x).toFixed(3), y: (p.aim.y).toFixed(3) });
         }
       }
       p.aim.display();
@@ -71,7 +71,9 @@ export default function sketch(p) {
     if (p.props.newGame && p.moveBall) {
       p.timeOfEnd = p.millis();
       p.moveBall = false;
-      p.props.generateResult(p.ball.x, p.ball.y, p.aimTrajectory, p.timeOfStart, p.timeOfEnd);
+      const time = ((p.timeOfEnd - p.timeOfStart)/1000).toFixed(3);
+      const success = p.dist(p.aim.x, p.aim.y, p.ball.x, p.ball.y) <= p.ball.radius;
+      p.props.generateResult((p.ball.x).toFixed(3), (p.ball.y).toFixed(3), p.aimTrajectory, time, success);
     }
   };
 
@@ -106,7 +108,7 @@ export default function sketch(p) {
   // ======================================================= DRAW POINTERLOCK FILTER
   function drawFilter() {
     p.push();
-    p.fill(p.color(0, 0, 0, 240));
+    p.fill(p.color(0, 0, 0, 150));
     p.rect(0, 0, p.width, p.height);
     p.fill('white');
     p.textSize(30);

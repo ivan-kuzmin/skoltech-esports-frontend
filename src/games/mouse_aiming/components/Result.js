@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 const Result = (props) => {
   const { result } = props;
   return (
-    <li className="text-left">
+    <li className={`${result.success ? 'text-success' : 'text-danger'}`}>
       <span className="text-light">
         <span>
-          {`${result.created_at} – `}
-        </span>
-        <span>
-          {`Speed: ${result.speed}, `}
+          {`${result.date} – `}
         </span>
         <span>
           {`Radius: ${result.radius}, `}
@@ -25,8 +22,7 @@ const Result = (props) => {
 
 Result.propTypes = {
   result: PropTypes.shape({
-    created_at: PropTypes.string,
-    speed: PropTypes.number,
+    date: PropTypes.string,
     radius: PropTypes.number,
     sensitivity: PropTypes.number,
   }).isRequired,

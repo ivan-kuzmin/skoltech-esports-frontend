@@ -11,8 +11,6 @@ export default function Ball(p, radius, color) {
     p.fill(this.fill);
     p.strokeWeight(this.stroke);
     p.ellipse(this.x, this.y, this.radius);
-    p.fill('black');
-    p.point(this.x, this.y);
     p.pop();
   };
 }
