@@ -1,6 +1,8 @@
-/* eslint-disable react/no-unused-state */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Menu from 'src/games/balls/components/Menu';
+import Filter from 'src/games/balls/components/Filter';
+import P5Wrapper from 'src/games/balls/P5Wrapper';
 
 class BaseApp extends Component {
   componentDidMount() {
@@ -56,6 +58,43 @@ class BaseApp extends Component {
         document.exitPointerLock();
       }
     });
+  }
+
+  renderApp(lang, Inputs, Result, sketch) {
+    const {
+      current_lang, game, newGame, user, results, isLoading,
+    } = this.state;
+
+    return (
+      <div className="w-100 h-100 d-flex">
+        <Menu
+          lang={lang[current_lang].Menu}
+          newGameButtonClick={this.newGameButtonClick}
+          goHome={this.goHome}
+        >
+          <Inputs
+            {...game}
+            lang={lang[current_lang].Inputs}
+            changeGameSettings={this.changeGameSettings}
+          />
+        </Menu>
+        <Filter
+          newGame={newGame}
+          user={user}
+          results={results}
+          isLoading={isLoading}
+          current_lang={current_lang}
+          lang={lang[current_lang].Filter}
+          changeLanguage={this.changeLanguage}
+          Result={Result}
+        />
+        <P5Wrapper
+          p5Props={{ newGame, generateResult: this.generateResult, ...game }}
+          sketch={sketch}
+          onSetAppState={this.onSetAppState}
+        />
+      </div>
+    );
   }
 }
 

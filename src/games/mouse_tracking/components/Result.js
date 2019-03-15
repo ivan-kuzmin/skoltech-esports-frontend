@@ -7,7 +7,7 @@ const Result = (props) => {
     <li className="text-left">
       <span className="text-light">
         <span>
-          {`${result.created_at} – `}
+          {`${result.date} – `}
         </span>
         <span>
           {`Speed: ${result.speed}, `}
@@ -25,10 +25,10 @@ const Result = (props) => {
 
 Result.propTypes = {
   result: PropTypes.shape({
-    created_at: PropTypes.string,
-    speed: PropTypes.number,
-    radius: PropTypes.number,
-    sensitivity: PropTypes.number,
+    date: PropTypes.string.isRequired,
+    speed: PropTypes.number.isRequired,
+    radius: PropTypes.number.isRequired,
+    sensitivity: PropTypes.number.isRequired,
   }).isRequired,
 };
 

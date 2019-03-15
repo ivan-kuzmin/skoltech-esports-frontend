@@ -27,8 +27,6 @@ export default function Ball(p, x, y, radius, color, timeOnChangeSpeed) {
     p.fill(this.fill);
     p.strokeWeight(this.stroke);
     p.ellipse(this.x, this.y, this.radius);
-    p.fill('black');
-    p.point(this.x, this.y);
     p.pop();
   };
 }

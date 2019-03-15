@@ -1,8 +1,4 @@
-import React from 'react';
 import { withCookies } from 'react-cookie';
-import P5Wrapper from 'src/games/balls/P5Wrapper';
-import Menu from 'src/games/balls/components/Menu';
-import Filter from 'src/games/balls/components/Filter';
 import BaseApp from 'src/games/balls/BaseApp';
 import Inputs from './components/Inputs';
 import Result from './components/Result';
@@ -50,43 +46,7 @@ class App extends BaseApp {
     this.checkNewGame([result, ...results], 500);
   }
 
-  render() {
-    const {
-      level, current_lang, game, newGame, user, results, isLoading,
-    } = this.state;
-    
-    return (
-      <div className="w-100 h-100 d-flex">
-        <Menu
-          lang={lang[current_lang].Menu}
-          newGameButtonClick={this.newGameButtonClick}
-          goHome={this.goHome}
-        >
-          <Inputs
-            {...game}
-            current_lang={current_lang}
-            toggleMode={this.toggleMode}
-            changeGameSettings={this.changeGameSettings}
-          />
-        </Menu>
-        <Filter
-          newGame={newGame}
-          user={user}
-          results={results}
-          isLoading={isLoading}
-          current_lang={current_lang}
-          lang={lang[current_lang].Filter}
-          changeLanguage={this.changeLanguage}
-          Result={Result}
-        />
-        <P5Wrapper
-          p5Props={{ newGame, generateResult: this.generateResult, ...game }}
-          sketch={sketch}
-          onSetAppState={this.onSetAppState}
-        />
-      </div>
-    );
-  }
+  render() { return this.renderApp(lang, Inputs, Result, sketch); }
 }
 
 export default withCookies(App);

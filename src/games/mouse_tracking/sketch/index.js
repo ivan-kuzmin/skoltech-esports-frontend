@@ -54,8 +54,8 @@ export default function sketch(p) {
         if (p.moveBall) {
           drawLoadingLine();
           p.ball.move();
-          p.aimTrajectory.push({ x: p.aim.x, y: p.aim.y });
-          p.ballTrajectory.push({ x: p.ball.x, y: p.ball.y });
+          p.aimTrajectory.push({ x: (p.aim.x).toFixed(3), y: (p.aim.y).toFixed(3) });
+          p.ballTrajectory.push({ x: (p.ball.x).toFixed(3), y: (p.ball.y).toFixed(3) });
         }
       }
       if (!p.startGame) { drawFilter(); }

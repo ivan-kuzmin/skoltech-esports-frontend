@@ -7,7 +7,7 @@ export default function sketch(p) {
   p.selectedBalls = [];
   p.moveBalls = true;
   p.startTime = 1;
-  p.gameTime = 1;
+  p.gameTime = 3;
   p.defaultColor = p.color('blue');
   p.targetColor = p.color('red');
   p.selectedColor = p.color(0, 255, 0);

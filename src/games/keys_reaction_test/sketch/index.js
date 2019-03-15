@@ -1,6 +1,8 @@
+import createStats from 'src/assets/js/createStats';
+
 export default function sketch(p) {
+  const stats = createStats();
   p.props = {};
-  p.fps = 0;
   p.allKeys = [
     { key: 87, value: 'W' },
     { key: 65, value: 'A' },
@@ -54,6 +56,10 @@ export default function sketch(p) {
 
   // ======================================================= DRAW FUNCTION
   p.draw = function () {
+    for (const stat of stats) {
+      stat.domElement.style.opacity = p.props.newGame ? 0.5 : 1;
+      stat.update();
+    }
     p.background(230);
     p.cursor(p.ARROW);
 
@@ -117,7 +123,9 @@ export default function sketch(p) {
       p.timeOut2 = setTimeout(() => {
         // p.ready = false;
         if (!p.timeOfEnd) { p.timeOfEnd = p.millis(); }
-        p.props.generateResult(p.timeOfEnd, p.timeOfStart, p.targetString, p.currentInput);
+        const time = (p.timeOfEnd - p.timeOfStart)/1000;
+        const success = time < p.props.gameTime;
+        p.props.generateResult(time.toFixed(3), success, p.targetString, p.currentInput);
       }, p.props.gameTime*1000);
     }, p.props.startTime*1000);
   }
@@ -148,10 +156,6 @@ export default function sketch(p) {
 
   // ======================================================= DRAW LABEL FUNCTION
   function drawLabel() {
-    p.push();
-    if (p.frameCount%20 === 0) { p.fps = p.frameRate(); }
-    p.text(`FPS: ${p.fps.toFixed(1)}`, 30, 30);
-    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 30, 50);
-    p.pop();
+    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 20, p.wrapper.offsetHeight-20);
   }
 }
