@@ -7,13 +7,13 @@ const Result = (props) => {
     <li className={`text-left ${result.success ? 'text-success' : 'text-danger'}`}>
       <span className="text-light">
         <span>
-          {result.created_at}
+          {result.date}
           {' – '}
         </span>
         <span>
           {'Time Reaction: '}
           <b>
-            {result.time_reaction.toFixed(3)}
+            {result.time_reaction}
           </b>
           {', '}
         </span>
@@ -31,12 +31,8 @@ const Result = (props) => {
 };
 
 Result.propTypes = {
-  result: PropTypes.shape({
-    created_at: PropTypes.string,
-    time_reaction: PropTypes.number,
-    mode: PropTypes.string,
-    success: PropTypes.bool,
-  }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  result: PropTypes.object.isRequired,
 };
 
 export default Result;

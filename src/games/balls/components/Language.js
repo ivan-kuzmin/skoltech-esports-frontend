@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const Button = styled.div`
   padding: 5px 10px;
@@ -22,18 +23,24 @@ const Button = styled.div`
     opacity: 0.8;
     transform: scale(0.9);
   }
-`
+`;
 
-class Language extends Component {
-  render() {
-    const { changeLanguage, current_lang } = this.props
-    return (
-      <Button id="language" className="bg-warning" onClick={changeLanguage}>
-        <span className={current_lang === 'ru' ? 'font-weight-bold' : ''}>RU</span>/
-        <span className={current_lang === 'en' ? 'font-weight-bold' : ''}>EN</span>
-      </Button>
-    )
-  }
-}
+const Language = (props) => {
+  const { changeLanguage, current_lang } = props;
+
+  return (
+    <Button id="language" className="bg-warning" onClick={changeLanguage}>
+      <span className={current_lang === 'ru' ? 'font-weight-bold' : ''}>RU</span>
+      /
+      <span className={current_lang === 'en' ? 'font-weight-bold' : ''}>EN</span>
+    </Button>
+  );
+};
+
+Language.propTypes = {
+  current_lang: PropTypes.string.isRequired,
+  changeLanguage: PropTypes.func.isRequired,
+};
+
 
 export default Language;

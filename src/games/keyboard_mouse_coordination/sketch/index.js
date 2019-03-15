@@ -213,6 +213,7 @@ export default function sketch(p) {
     p.startGame = false;
     p.moveBalls = false;
     p.timeOfEnd = p.millis();
-    p.props.generateResult(p.timeOfStart, p.timeOfEnd, mode);
+    const time = ((p.timeOfEnd - p.timeOfStart)/1000).toFixed(3);
+    p.props.generateResult(time, mode);
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
-import { withCookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 import {
   Container,
   Row,
@@ -8,6 +8,7 @@ import {
   Navbar,
   NavbarBrand,
   Button,
+  Spinner,
 } from 'reactstrap';
 import styled from 'styled-components';
 import NavbarMenu from './components/NavbarMenu';
@@ -26,102 +27,58 @@ const MenuFilter = styled.div`
 class App extends Component {
   constructor(props) {
     super(props);
-    const { cookies } = props;
     this.state = {
-      status: false,
-      user: { username: '' },
-      token: cookies.get('token'),
+      isLoading: true,
       visibleMenu: false,
     };
   }
 
-  componentDidMount() { this.getUser(); }
-
-  toggleMenu = () => { this.setState(state => ({ visibleMenu: !state.visibleMenu })); }
-
-  getUser = () => {
-    const { token } = this.state;
-    if (token) {
-      fetch('http://127.0.0.1:8000', {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({
-            status: true,
-            user: { username: data.username },
-          });
-        })
-        .catch((err) => {
-          this.setState({ status: false });
-          console.log('Fetch Error: ', err);
-        });
-    }
+  componentDidMount() {
+    const { firebase } = this.props;
+    this.firebaseListener = firebase.auth.onAuthStateChanged(user => this.setState({ user, isLoading: false }));
   }
 
+  componentWillUnmount() { this.firebaseListener(); }
+
   login = () => {
-    const { cookies } = this.props;
-    fetch('http://127.0.0.1:8000', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: 'admin',
-        password: 'admin',
-      }),
-    })
-      .then(response => response.json())
-      .then((data) => {
-        cookies.set('token', data.token, { path: '/' });
-        this.setState({ token: data.token });
-        this.getUser();
-        console.log(data);
-      })
-      .catch((err) => {
-        this.setState({ status: false });
-        console.log('Fetch Error: ', err);
-      });
+    const { firebase } = this.props;
+    const email = 'woof@heisen.me';
+    const password = '123456';
+    this.setState({ isLoading: true }, () => {
+      firebase.auth.signInWithEmailAndPassword(email, password)
+        .then(() => this.setState({ isLoading: false }))
+        .catch(() => this.setState({ isLoading: false }));
+    });
   }
 
   logout = () => {
-    const { cookies } = this.props;
-    const { token } = this.state;
-    fetch('http://127.0.0.1:8000/logout/', {
-      method: 'POST',
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then((data) => {
-        cookies.remove('token');
-        this.setState({
-          status: true,
-          user: { username: '' },
-          token: cookies.get('token'),
-        });
-      })
-      .catch((err) => {
-        this.setState({ status: false });
-        console.log('Fetch Error: ', err);
-      });
+    const { firebase } = this.props;
+    firebase.auth.signOut();
   }
 
+  toggleMenu = () => { this.setState(state => ({ visibleMenu: !state.visibleMenu })); }
+
   render() {
-    const { visibleMenu, token, user } = this.state;
+    const {
+      visibleMenu, user, isLoading,
+    } = this.state;
     return (
       <div style={{ background: 'rgba(0, 0, 0, 0.5)' }}>
         <HashRouter>
           <div>
             <Navbar dark style={{ background: 'black' }}>
               <NavbarBrand href="/" className="mr-auto">Skoltech E-sports</NavbarBrand>
-              <div className="ml-auto mr-4 text-white font-weight-light small">{user.username}</div>
-              {!token && <Button className="mr-2" color="success" size="sm" onClick={this.login}>Login</Button>}
-              {token && <Button color="danger" size="sm" onClick={this.logout}>Logout</Button>}
+              {
+                !isLoading
+                  ? (
+                    <>
+                      <div className="ml-auto mr-4 text-white font-weight-light small">{user ? user.email : ''}</div>
+                      {!user && <Button className="mr-2" color="success" size="sm" onClick={this.login}>Login</Button>}
+                      {user && <Button color="danger" size="sm" onClick={this.logout}>Logout</Button>}
+                    </>
+                  )
+                  : <Spinner className="text-white mr-3" />
+              }
             </Navbar>
             <Container fluid className="position-relative" style={{ minHeight: '100vh' }}>
               <Row>
@@ -145,4 +102,9 @@ class App extends Component {
   }
 }
 
-export default withCookies(App);
+App.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  firebase: PropTypes.object.isRequired,
+};
+
+export default App;

@@ -7,22 +7,22 @@ const Result = (props) => {
     <li className="text-left">
       <span className="text-light">
         <span>
-          {`${result.created_at} – `}
+          {`${result.date} – `}
         </span>
         <span>
           {'Time: '}
-          <b>{result.time.toFixed(3)}</b>
+          <b>{result.time}</b>
           {', '}
         </span>
         <span>
-          {`Balls: ${result.balls}, `}
+          {`Balls: ${result.ballsCount}, `}
         </span>
         <span>
           {`Speed: ${result.speed}, `}
         </span>
         <span>
           {'Hit: '}
-          <i>{`«${result.hit}»`}</i>
+          <i>{`«${result.mode}»`}</i>
           {', '}
         </span>
       </span>
@@ -32,11 +32,11 @@ const Result = (props) => {
 
 Result.propTypes = {
   result: PropTypes.shape({
-    created_at: PropTypes.string,
-    time: PropTypes.number,
-    balls: PropTypes.number,
-    speed: PropTypes.number,
-    hit: PropTypes.string,
+    date: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    ballsCount: PropTypes.number.isRequired,
+    speed: PropTypes.number.isRequired,
+    mode: PropTypes.string.isRequired,
   }).isRequired,
 };
 

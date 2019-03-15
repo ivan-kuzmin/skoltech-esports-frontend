@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Spinner } from 'reactstrap';
+import { Download } from 'react-feather';
 import Language from './Language';
 
 const Background = styled.div`
@@ -37,22 +38,52 @@ const Results = styled.div`
   }
 `;
 
+const DownloadButton = styled(Download)`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  :hover {
+    opacity: 0.9;
+  }
+  :active {
+    opacity: 0.8;
+    transform: scale(0.9);
+  }
+`;
+
 const Filter = (props) => {
   const {
-    lang, changeLanguage, current_lang, status, user, results, Result, newGame,
+    lang, changeLanguage, current_lang, user, results, Result, newGame, isLoading,
   } = props;
+
   return (
     <Background id="filter" visible={!newGame}>
       <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
         <h3 className="text-center text-uppercase mb-3 font-weight-bold">
           {`${lang.last_results}:`}
         </h3>
-        <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4">
+        <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4 position-relative">
           {
-            status
+            (results.length !== 0)
+            && (
+              <a
+                href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ results }, null, 2))}`}
+                download={`${window.location.pathname.split('/').pop()}_${new Date().getTime()}.json`}
+              >
+                <DownloadButton className="text-warning" />
+              </a>
+            )}
+          {
+            !isLoading
               ? (
                 <div>
-                  <h5 className="mt-2 mb-3">{`User: ${user.username}`}</h5>
+                  {
+                    user
+                      ? <p className="mt-2 mb-3">{`${user.email}`}</p>
+                      : <p className="mt-2 mb-3">Unknown user</p>
+                  }
                   <ul className="m-0 p-0" style={{ listStylePosition: 'inside' }}>
                     {results.map(result => <Result key={result.id} result={result} />)}
                   </ul>
@@ -74,11 +105,11 @@ const Filter = (props) => {
 
 Filter.propTypes = {
   newGame: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string,
-  }).isRequired,
+    email: PropTypes.string.isRequired,
+  }),
   results: PropTypes.arrayOf(PropTypes.object),
-  status: PropTypes.bool.isRequired,
   current_lang: PropTypes.string.isRequired,
   lang: PropTypes.objectOf(PropTypes.string).isRequired,
   changeLanguage: PropTypes.func.isRequired,
