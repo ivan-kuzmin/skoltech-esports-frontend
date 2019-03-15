@@ -73,7 +73,7 @@ export default function sketch(p) {
         drawLoadingLine();
         if (p.ready) {
           for (const ball of p.balls) { ball.display(); }
-          p.aimTrajectory.push({ x: p.aim.x, y: p.aim.y });
+          p.aimTrajectory.push({ x: (p.aim.x).toFixed(3), y: (p.aim.y).toFixed(3) });
         }
       }
       p.aim.display();
@@ -90,28 +90,29 @@ export default function sketch(p) {
       startTimer();
     }
     if (p.props.newGame && p.ready) {
-      if (p.clicks.length < p.props.ballsCount) {
-        for (const ball of p.balls) {
-          const d = p.dist(p.aim.x, p.aim.y, ball.x, ball.y);
-          if (d <= p.props.radius && !ball.visited) {
-            ball.fill = 'blue';
-            ball.visited = true;
-          }
+      for (const ball of p.balls) {
+        const d = p.dist(p.aim.x, p.aim.y, ball.x, ball.y);
+        if (d <= p.props.radius && !ball.visited) {
+          ball.fill = 'blue';
+          ball.visited = true;
         }
-        const time = p.millis() - p.timeOfStart;
-        p.clicks.push({ x: p.aim.x, y: p.aim.y, time });
       }
-      if (p.clicks.length === p.props.ballsCount) {
+      const time = p.millis() - p.timeOfStart;
+      p.clicks.push({ x: (p.aim.x).toFixed(3), y: (p.aim.y).toFixed(3), time });
+      let allBallsAreClicked = true;
+      for (const ball of p.balls) { if (!ball.visited) { allBallsAreClicked = false; } }
+      if (allBallsAreClicked) {
         p.timeOfEnd = p.millis();
         p.ready = false;
         const balls = [];
         for (const ball of p.balls) {
           balls.push({
-            x: ball.x,
-            y: ball.y,
+            x: (ball.x).toFixed(3),
+            y: (ball.y).toFixed(3),
           });
         }
-        p.props.generateResult(balls, p.clicks, p.aimTrajectory, p.timeOfStart, p.timeOfEnd);
+        const time = ((p.timeOfEnd - p.timeOfStart) / 1000).toFixed(3);
+        p.props.generateResult(balls, p.clicks, p.aimTrajectory, time);
       }
     }
   };
@@ -147,7 +148,7 @@ export default function sketch(p) {
   // ======================================================= DRAW POINTERLOCK FILTER
   function drawFilter() {
     p.push();
-    p.fill(p.color(0, 0, 0, 240));
+    p.fill(p.color(0, 0, 0, 150));
     p.rect(0, 0, p.width, p.height);
     p.fill('white');
     p.textSize(30);

@@ -34,7 +34,7 @@ export default function sketch(p) {
 
   // ======================================================= END GAME FUNCTION
   function endGame() {
-    p.onSetAppState({ newGame: false, playedGames: 0 });
+    p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
     p.startGame = false;
     p.targetString = [];
     clearTimeout(p.timeOut1);
@@ -133,7 +133,7 @@ export default function sketch(p) {
   // ======================================================= DRAW POINTERLOCK FILTER
   function drawFilter() {
     p.push();
-    p.fill(p.color(0, 0, 0, 240));
+    p.fill(p.color(0, 0, 0, 150));
     p.rect(0, 0, p.width, p.height);
     p.fill('white');
     p.textSize(30);

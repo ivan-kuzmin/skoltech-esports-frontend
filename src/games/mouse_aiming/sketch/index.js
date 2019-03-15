@@ -1,10 +1,11 @@
 import pointerLock from 'src/assets/js/pointerLock';
+import createStats from 'src/assets/js/createStats';
 import Ball from './Ball';
 import Aim from './Aim';
 
 export default function sketch(p) {
+  const stats = createStats();
   p.props = {};
-  p.fps = 0;
   p.cs_go_coefficient = 0.2745;
   p.aimTrajectory = [];
 
@@ -33,7 +34,7 @@ export default function sketch(p) {
     p.onSetAppState({ startNewGame });
     p.wrapper.onfullscreenchange = (event) => {
       if (!document.fullscreenElement) {
-        p.onSetAppState({ newGame: false, playedGames: 0 });
+        p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
         p.startGame = false;
         clearTimeout(p.timeOut1);
       }
@@ -44,6 +45,10 @@ export default function sketch(p) {
 
   // ======================================================= DRAW FUNCTION
   p.draw = function () {
+    for (const stat of stats) {
+      stat.domElement.style.opacity = p.props.newGame ? 0.5 : 1;
+      stat.update();
+    }
     p.background(230);
     p.cursor(p.ARROW);
 
@@ -122,7 +127,7 @@ export default function sketch(p) {
   // ======================================================= DRAW LOADING LINE FUNCTION
   function drawLoadingLine() {
     if (p.loadingWidth <= p.width) {
-      p.loadingWidth += p.width/(60*(p.props.startTime));
+      p.loadingWidth += p.width/(60*(p.props.startTime));s
     }
     p.push();
     p.fill('blue');
@@ -133,8 +138,6 @@ export default function sketch(p) {
 
   // ======================================================= DRAW LABEL FUNCTION
   function drawLabel() {
-    if (p.frameCount%20 === 0) { p.fps = p.frameRate(); }
-    p.text(`FPS: ${p.fps.toFixed(1)}`, 30, 30);
-    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 30, 50);
+    p.text(`Trials: ${p.props.playedGames}/${p.props.countOfGames}`, 20, p.wrapper.offsetHeight-20);
   }
 }
