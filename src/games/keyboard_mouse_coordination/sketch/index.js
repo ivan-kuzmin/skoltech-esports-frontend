@@ -22,11 +22,11 @@ export default function sketch(p) {
 
     p.onSetAppState({ startNewGame });
 
-    p.wrapper.onfullscreenchange = (event) => {
-      if (!document.fullscreenElement) {
-        p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
-      }
-    };
+    // p.wrapper.onfullscreenchange = (event) => {
+    //   if (!document.fullscreenElement) {
+    //     p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
+    //   }
+    // };
     pointerLock(p, p.moveCallback, false);
   };
 
@@ -85,7 +85,7 @@ export default function sketch(p) {
       p.leftBalls = [];
       p.rightBalls = [];
       clearInterval(p.timeOut1);
-      p.onSetAppState({ newGame: false, playedGames: 0 });
+      p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
     }
   });
 
