@@ -7,7 +7,7 @@ const Result = (props) => {
     <li className={`${result.success ? 'text-success' : 'text-danger'}`}>
       <span className="text-light">
         <span>
-          {`${result.created_at} – `}
+          {`${result.date} – `}
         </span>
         <span>
           {`Matrix Size: ${result.matrixSize}, `}
@@ -22,10 +22,10 @@ const Result = (props) => {
 
 Result.propTypes = {
   result: PropTypes.shape({
-    success: PropTypes.bool,
-    created_at: PropTypes.string,
-    matrixSize: PropTypes.number,
-    letterSize: PropTypes.number,
+    success: PropTypes.bool.isRequired,
+    date: PropTypes.string.isRequired,
+    matrixSize: PropTypes.number.isRequired,
+    letterSize: PropTypes.number.isRequired,
   }).isRequired,
 };
 

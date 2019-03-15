@@ -84,13 +84,14 @@ export default function sketch(p) {
     if (p.props.newGame && p.ready) {
       p.timeOfEnd = p.millis();
       const success = (p.mouseButton === p.LEFT && p.presentL) || (p.mouseButton === p.RIGHT && !p.presentL);
-      p.props.generateResult(success, p.timeOfStart, p.timeOfEnd);
+      const time = ((p.timeOfEnd - p.timeOfStart) / 1000).toFixed(3);
+      p.props.generateResult(success, time);
     }
   };
 
   // ======================================================= END GAME FUNCTION
   function endGame() {
-    p.onSetAppState({ newGame: false, playedGames: 0 });
+    p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
     p.startGame = false;
     clearTimeout(p.timeOut1);
     clearTimeout(p.timeOut2);
@@ -105,7 +106,8 @@ export default function sketch(p) {
         p.ready = false;
         p.timeOfEnd = p.millis();
         const success = false;
-        p.props.generateResult(success, p.timeOfStart, p.timeOfEnd);
+        const time = ((p.timeOfEnd - p.timeOfStart) / 1000).toFixed(3);
+        p.props.generateResult(success, time);
       }, p.props.gameTime * 1000);
     }, p.props.startTime * 1000);
   }
