@@ -7,9 +7,10 @@ import {
   ArrowRight,
   ArrowLeft,
   Home,
-  Users,
-  HelpCircle,
+  // Users,
+  // HelpCircle,
 } from 'react-feather';
+import Language from './Language';
 
 const NavbarCol = styled(Col)`
   transition: 0.2s;
@@ -36,24 +37,23 @@ const menuList = [
     name: 'Home',
     icon: <Home />,
   },
-  {
-    id: 1,
-    link: '/users',
-    name: 'Users',
-    icon: <Users />,
-  },
-  {
-    id: 2,
-    link: '/help',
-    name: 'Help',
-    icon: <HelpCircle />,
-  },
+  // {
+  //   id: 1,
+  //   link: '/users',
+  //   name: 'Users',
+  //   icon: <Users />,
+  // },
+  // {
+  //   id: 2,
+  //   link: '/help',
+  //   name: 'Help',
+  //   icon: <HelpCircle />,
+  // },
 ];
 
 const NavbarMenu = (props) => {
   const {
-    visibleMenu,
-    toggleMenu,
+    visibleMenu, toggleMenu, current_lang, changeLanguage,
   } = props;
 
   function closeMenu() {
@@ -86,6 +86,12 @@ const NavbarMenu = (props) => {
             </NavItem>
           ))
         }
+        <Language
+          visibleMenu={visibleMenu}
+          closeMenu={closeMenu}
+          current_lang={current_lang}
+          changeLanguage={changeLanguage}
+        />
       </Nav>
     </NavbarCol>
   );
@@ -94,6 +100,8 @@ const NavbarMenu = (props) => {
 NavbarMenu.propTypes = {
   visibleMenu: PropTypes.bool.isRequired,
   toggleMenu: PropTypes.func.isRequired,
+  current_lang: PropTypes.string.isRequired,
+  changeLanguage: PropTypes.func.isRequired,
 };
 
 export default NavbarMenu;

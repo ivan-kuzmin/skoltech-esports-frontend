@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withCookies } from 'react-cookie';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -27,9 +28,11 @@ const MenuFilter = styled.div`
 class App extends Component {
   constructor(props) {
     super(props);
+    const { cookies } = this.props;
     this.state = {
       isLoading: true,
       visibleMenu: false,
+      current_lang: cookies.get('language') || 'en',
     };
   }
 
@@ -58,9 +61,17 @@ class App extends Component {
 
   toggleMenu = () => { this.setState(state => ({ visibleMenu: !state.visibleMenu })); }
 
+  changeLanguage = () => {
+    let { current_lang } = this.state;
+    const { cookies } = this.props;
+    current_lang = (current_lang === 'ru') ? 'en' : 'ru';
+    cookies.set('language', current_lang, { path: '/' });
+    this.setState({ current_lang });
+  }
+
   render() {
     const {
-      visibleMenu, user, isLoading,
+      visibleMenu, user, isLoading, current_lang,
     } = this.state;
     return (
       <div style={{ background: 'rgba(0, 0, 0, 0.5)' }}>
@@ -85,11 +96,13 @@ class App extends Component {
                 <NavbarMenu
                   toggleMenu={this.toggleMenu}
                   visibleMenu={visibleMenu}
+                  current_lang={current_lang}
+                  changeLanguage={this.changeLanguage}
                 />
                 {visibleMenu && <MenuFilter onClick={this.toggleMenu} />}
                 <Col className="pt-4" style={{ overflow: 'hidden', marginLeft: '60px' }}>
                   <Route path="/" exact component={() => <Redirect from="/" to="/home" />} />
-                  <Route path="/home" exact component={HomeScreen} />
+                  <Route path="/home" exact component={() => <HomeScreen current_lang={current_lang} />} />
                   {/* <Route path="/home/balls" component={Balls} /> */}
                   {/* <Route path="/users/" component={UsersScreen} /> */}
                 </Col>
@@ -107,4 +120,4 @@ App.propTypes = {
   firebase: PropTypes.object.isRequired,
 };
 
-export default App;
+export default withCookies(App);

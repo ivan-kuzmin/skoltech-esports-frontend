@@ -2,7 +2,7 @@ const lang = {
   en: {
     Menu: {
       header: 'Instruction',
-      description: 'In every trial, a red circle will show up at random position on the screen. You should click on the center of the circle as soon as possible.',
+      description: 'In every trial, a blue circle will show up at random position on the screen. You should click on the center of the circle as soon as possible.',
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',
@@ -22,7 +22,7 @@ const lang = {
   ru: {
     Menu: {
       header: 'Инструкция',
-      description: '---',
+      description: 'В каждой попытке синий шар будет отображаться на экране. Вы должны нажать на центр шара как можно скорее.',
       current_level: 'Текущий уровень',
       new_game: 'Новая игра',
       home: 'Домой',
