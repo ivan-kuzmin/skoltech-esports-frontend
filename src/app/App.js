@@ -12,6 +12,7 @@ import {
   Spinner,
 } from 'reactstrap';
 import styled from 'styled-components';
+import BrowserDetect from 'src/assets/js/browserdetect';
 import NavbarMenu from './components/NavbarMenu';
 import HomeScreen from './components/HomeScreen';
 // import Balls from './components/Balls'
@@ -33,10 +34,13 @@ class App extends Component {
       isLoading: true,
       visibleMenu: false,
       current_lang: cookies.get('language') || 'en',
+      browserAccept: true,
     };
   }
 
   componentDidMount() {
+    BrowserDetect.init();
+    if (BrowserDetect.browser !== 'Chrome' && BrowserDetect.version < 45) { this.setState({ browserAccept: false }); }
     const { firebase } = this.props;
     this.firebaseListener = firebase.auth.onAuthStateChanged(user => this.setState({ user, isLoading: false }));
   }
@@ -45,8 +49,8 @@ class App extends Component {
 
   login = () => {
     const { firebase } = this.props;
-    const email = 'woof@heisen.me';
-    const password = '123456';
+    const email = '';
+    const password = '';
     this.setState({ isLoading: true }, () => {
       firebase.auth.signInWithEmailAndPassword(email, password)
         .then(() => this.setState({ isLoading: false }))
@@ -71,7 +75,7 @@ class App extends Component {
 
   render() {
     const {
-      visibleMenu, user, isLoading, current_lang,
+      visibleMenu, user, isLoading, current_lang, browserAccept,
     } = this.state;
     return (
       <div style={{ background: 'rgba(0, 0, 0, 0.5)' }}>
@@ -102,7 +106,7 @@ class App extends Component {
                 {visibleMenu && <MenuFilter onClick={this.toggleMenu} />}
                 <Col className="pt-4" style={{ overflow: 'hidden', marginLeft: '60px' }}>
                   <Route path="/" exact component={() => <Redirect from="/" to="/home" />} />
-                  <Route path="/home" exact component={() => <HomeScreen current_lang={current_lang} />} />
+                  <Route path="/home" exact component={() => (browserAccept ? <HomeScreen current_lang={current_lang} /> : <Container className="text-light text-center mt-5 font-weight-light">{'Your browser does not support this platform. Please use desktop Google Chrome >= 45.'}</Container>)} />
                   {/* <Route path="/home/balls" component={Balls} /> */}
                   {/* <Route path="/users/" component={UsersScreen} /> */}
                 </Col>

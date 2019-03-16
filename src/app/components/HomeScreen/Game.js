@@ -13,19 +13,27 @@ const CardContainer = styled(Card)`
   transition: 0.3s;
   cursor: pointer;
   flex-basis: 20% !important;
-  -webkit-box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-  -moz-box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  overflow: hidden;
   &:hover {
-    svg {
-      display: block;
-    }
-    transform: scale(1.03);
     -webkit-box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     -moz-box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  }
+  &:before {
+    content: "";
+    height: 100%;
+    width: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #28a745;
+    visibility: hidden;
+    transform: translateX(-6px);
+    transition: all 0.1s ease-in-out;
+  }
+  &:hover:before {
+    visibility: visible;
+    transform: translateX(0);
   }
 `;
 
