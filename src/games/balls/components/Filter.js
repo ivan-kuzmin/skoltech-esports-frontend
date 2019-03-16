@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { saveAs } from 'file-saver';
 import { Spinner } from 'reactstrap';
 import { Download } from 'react-feather';
 import Language from './Language';
@@ -58,6 +59,11 @@ const Filter = (props) => {
     lang, changeLanguage, current_lang, user, results, Result, newGame, isLoading, name,
   } = props;
 
+  const saveResults = () => {
+    const blob = new Blob([JSON.stringify({ results }, null, 2)], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, `${name}_${new Date().getTime()}.json`);
+  };
+
   return (
     <Background id="filter" visible={!newGame}>
       <ResultsContainer id="results_container" className="bg-warning pt-4 pb-3 px-3 d-flex flex-column">
@@ -67,14 +73,8 @@ const Filter = (props) => {
         <Results id="results" className="flex-fill bg-dark text-light py-3 text-center px-4 position-relative">
           {
             (results.length !== 0)
-            && (
-              <a
-                href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ results }, null, 2))}`}
-                download={`${name}_${new Date().getTime()}.json`}
-              >
-                <DownloadButton className="text-warning" />
-              </a>
-            )}
+            && <DownloadButton className="text-warning" onClick={saveResults} />
+          }
           {
             !isLoading
               ? (
