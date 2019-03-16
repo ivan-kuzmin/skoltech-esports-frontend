@@ -152,7 +152,8 @@ export default function sketch(p) {
     p.textSize(30);
     p.textStyle(p.NORMAL);
     p.textAlign(p.CENTER, p.TOP);
-    p.text('CLICK HERE TO START GAME', p.width/2, p.height/2);
+    p.text('CLICK TO START GAME', p.width / 2, p.height / 2 - 20);
+    p.text('(ESC TO EXIT)', p.width / 2, p.height / 2 + 20);
     p.pop();
   }
 

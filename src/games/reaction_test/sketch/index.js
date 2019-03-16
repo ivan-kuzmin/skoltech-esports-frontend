@@ -122,7 +122,7 @@ export default function sketch(p) {
     return false;
   };
 
-  // ======================================================= DRAW FILTER
+  // ======================================================= DRAW POINTERLOCK FILTER
   function drawFilter() {
     p.push();
     p.fill(p.color(0, 0, 0, 150));

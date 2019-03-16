@@ -112,14 +112,14 @@ export default function sketch(p) {
   // ======================================================= DRAW POINTERLOCK FILTER
   function drawFilter() {
     p.push();
-    p.fill(p.color(0, 0, 0, 240));
+    p.fill(p.color(0, 0, 0, 150));
     p.rect(0, 0, p.width, p.height);
     p.fill('white');
     p.textSize(30);
     p.textStyle(p.NORMAL);
     p.textAlign(p.CENTER, p.TOP);
-    p.text('CLICK TO START GAME', p.width/2, p.height/2-20);
-    p.text('(ESC TO EXIT)', p.width/2, p.height/2+20);
+    p.text('CLICK TO START GAME', p.width / 2, p.height / 2 - 20);
+    p.text('(ESC TO EXIT)', p.width / 2, p.height / 2 + 20);
     p.pop();
   }
 

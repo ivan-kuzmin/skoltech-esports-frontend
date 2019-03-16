@@ -111,8 +111,8 @@ export default function sketch(p) {
             y: (ball.y).toFixed(3),
           });
         }
-        const time = ((p.timeOfEnd - p.timeOfStart) / 1000).toFixed(3);
-        p.props.generateResult(balls, p.clicks, p.aimTrajectory, time);
+        const time1 = ((p.timeOfEnd - p.timeOfStart) / 1000).toFixed(3);
+        p.props.generateResult(balls, p.clicks, p.aimTrajectory, time1);
       }
     }
   };

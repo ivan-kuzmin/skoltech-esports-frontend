@@ -30,20 +30,20 @@ const games = [
     title: 'Reaction test',
     description: reactionTestLang[current_lang].Menu.description,
   },
-  {
-    link: '', // 'games/reaction_decision_test',
-    status: '',
-    image: ballsImage2,
-    title: 'Reaction + Decision Test',
-    description: reactionDecisionTestLang[current_lang].Menu.description,
-  },
-  {
-    link: 'games/two_hands_coordination',
-    status: 'danger',
-    image: ballsImage2,
-    title: 'Two–Hands Coordination',
-    description: 'Description.',
-  },
+  // {
+  //   link: '', // 'games/reaction_decision_test',
+  //   status: '',
+  //   image: ballsImage2,
+  //   title: 'Reaction + Decision Test',
+  //   description: reactionDecisionTestLang[current_lang].Menu.description,
+  // },
+  // {
+  //   link: 'games/two_hands_coordination',
+  //   status: 'danger',
+  //   image: ballsImage2,
+  //   title: 'Two–Hands Coordination',
+  //   description: 'Description.',
+  // },
   {
     link: 'games/keyboard_mouse_coordination',
     status: 'done',
@@ -86,20 +86,20 @@ const games = [
     title: 'Visual Search with Time Limit',
     description: visualSearchWithTimeLimitLang[current_lang].Menu.description,
   },
-  {
-    link: 'games/expanding_ball',
-    status: 'done',
-    image: '',
-    title: 'Expanding Ball',
-    description: expandingBallLang[current_lang].Menu.description,
-  },
-  {
-    link: '', // 'games/memory_test',
-    status: '',
-    image: '',
-    title: 'Memory Test',
-    description: memoryTestLang[current_lang].Menu.description,
-  },
+  // {
+  //   link: 'games/expanding_ball',
+  //   status: '',
+  //   image: '',
+  //   title: 'Expanding Ball',
+  //   description: expandingBallLang[current_lang].Menu.description,
+  // },
+  // {
+  //   link: '', // 'games/memory_test',
+  //   status: '',
+  //   image: '',
+  //   title: 'Memory Test',
+  //   description: memoryTestLang[current_lang].Menu.description,
+  // },
 ];
 
 for (const game in games) {

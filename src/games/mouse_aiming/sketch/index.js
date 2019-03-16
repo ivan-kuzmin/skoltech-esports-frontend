@@ -119,15 +119,15 @@ export default function sketch(p) {
     p.textSize(30);
     p.textStyle(p.NORMAL);
     p.textAlign(p.CENTER, p.TOP);
-    p.text('CLICK TO START GAME', p.width/2, p.height/2-20);
-    p.text('(ESC TO EXIT)', p.width/2, p.height/2+20);
+    p.text('CLICK TO START GAME', p.width / 2, p.height / 2 - 20);
+    p.text('(ESC TO EXIT)', p.width / 2, p.height / 2 + 20);
     p.pop();
   }
 
   // ======================================================= DRAW LOADING LINE FUNCTION
   function drawLoadingLine() {
     if (p.loadingWidth <= p.width) {
-      p.loadingWidth += p.width/(60*(p.props.startTime));s
+      p.loadingWidth += p.width/(60*(p.props.startTime));
     }
     p.push();
     p.fill('blue');

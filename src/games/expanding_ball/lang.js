@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
   en: {
     Menu: {
       header: 'Instruction',
@@ -6,6 +6,9 @@ export const lang = {
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',
+    },
+    Inputs: {
+      count_of_trials: 'Count of trials',
     },
     Filter: {
       last_results: 'Your last results',
@@ -18,6 +21,9 @@ export const lang = {
       current_level: 'Текущий уровень',
       new_game: 'Новая игра',
       home: 'Домой',
+    },
+    Inputs: {
+      count_of_trials: 'Количество попыток',
     },
     Filter: {
       last_results: 'Ваши последние результаты',
