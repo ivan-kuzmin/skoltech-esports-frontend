@@ -7,6 +7,7 @@ import lang from './lang';
 
 class App extends BaseApp {
   state = {
+    name: 'balls',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],

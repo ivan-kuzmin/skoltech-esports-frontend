@@ -12,6 +12,7 @@ class App extends BaseApp {
   constructor(props) {
     super(props);
     this.state = {
+      name: 'memory_test',
       status: true,
       results: [], // only for default status true
       url: 'http://localhost:8000/visual_search_with_time_limit/results/',

@@ -62,7 +62,7 @@ class BaseApp extends Component {
 
   renderApp(lang, Inputs, Result, sketch) {
     const {
-      current_lang, game, newGame, user, results, isLoading,
+      current_lang, game, newGame, user, results, isLoading, name,
     } = this.state;
 
     return (
@@ -79,6 +79,7 @@ class BaseApp extends Component {
           />
         </Menu>
         <Filter
+          name={name}
           newGame={newGame}
           user={user}
           results={results}

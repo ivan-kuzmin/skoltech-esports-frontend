@@ -7,6 +7,7 @@ import sketch from './sketch';
 
 class App extends BaseApp {
   state = {
+    name: 'optimal_trajectory',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],

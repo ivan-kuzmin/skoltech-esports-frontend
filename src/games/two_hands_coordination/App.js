@@ -12,6 +12,7 @@ export class App extends BaseApp {
   constructor(props) {
     super(props)
     this.state = {
+      name: 'two_hands_coordination',
       status: false,
       url: 'http://localhost:8000/balls/results/',
       token: this.props.cookies.get('token'),

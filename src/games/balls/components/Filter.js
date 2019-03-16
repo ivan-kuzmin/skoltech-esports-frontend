@@ -55,7 +55,7 @@ const DownloadButton = styled(Download)`
 
 const Filter = (props) => {
   const {
-    lang, changeLanguage, current_lang, user, results, Result, newGame, isLoading,
+    lang, changeLanguage, current_lang, user, results, Result, newGame, isLoading, name,
   } = props;
 
   return (
@@ -70,7 +70,7 @@ const Filter = (props) => {
             && (
               <a
                 href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ results }, null, 2))}`}
-                download={`${window.location.pathname.split('/').pop()}_${new Date().getTime()}.json`}
+                download={`${name}_${new Date().getTime()}.json`}
               >
                 <DownloadButton className="text-warning" />
               </a>
@@ -109,6 +109,7 @@ Filter.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired,
   }),
+  name: PropTypes.string.isRequired,
   results: PropTypes.arrayOf(PropTypes.object),
   current_lang: PropTypes.string.isRequired,
   lang: PropTypes.objectOf(PropTypes.string).isRequired,

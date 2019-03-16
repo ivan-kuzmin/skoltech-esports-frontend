@@ -12,6 +12,7 @@ class App extends BallsApp {
   constructor(props) {
     super(props);
     this.state = {
+      name: 'reaction_decision_test',
       status: false,
       url: "http://localhost:8000/reaction_test/results/",
       token: this.props.cookies.get("token"),

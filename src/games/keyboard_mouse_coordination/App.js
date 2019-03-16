@@ -7,6 +7,7 @@ import sketch from './sketch';
 
 class App extends BaseApp {
   state = {
+    name: 'keyboard_mouse_coordination',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],
