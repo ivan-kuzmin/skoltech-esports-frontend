@@ -40,7 +40,7 @@ class App extends Component {
 
   componentDidMount() {
     BrowserDetect.init();
-    if (BrowserDetect.browser !== 'Chrome' && BrowserDetect.version < 45) { this.setState({ browserAccept: false }); }
+    if (BrowserDetect.browser !== 'Chrome' || BrowserDetect.version < 45) { this.setState({ browserAccept: false }); }
     const { firebase } = this.props;
     this.firebaseListener = firebase.auth.onAuthStateChanged(user => this.setState({ user, isLoading: false }));
   }
