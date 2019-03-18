@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import BrowserDetect from 'src/assets/js/browserdetect';
 import NavbarMenu from './components/NavbarMenu';
 import HomeScreen from './components/HomeScreen';
+import Login from './components/Login';
 // import Balls from './components/Balls'
 // import UsersScreen from './components/UsersScreen'
 
@@ -35,6 +36,7 @@ class App extends Component {
       visibleMenu: false,
       current_lang: cookies.get('language') || 'en',
       browserAccept: true,
+      showLoginForm: false,
     };
   }
 
@@ -47,14 +49,27 @@ class App extends Component {
 
   componentWillUnmount() { this.firebaseListener(); }
 
-  login = () => {
+  toggleLoginForm = () => { this.setState(state => ({ showLoginForm: !state.showLoginForm, error: '' })); }
+
+  signIn = (email, password, confirm) => {
     const { firebase } = this.props;
-    const email = '';
-    const password = '';
-    this.setState({ isLoading: true }, () => {
+    if (password !== confirm) {
+      this.setState({ error: 'Those passwords didn\'t match.' });
+    } else {
+      this.setState({ isLoading: true, error: '' }, () => {
+        firebase.auth.createUserWithEmailAndPassword(email, password)
+          .then(() => this.setState({ isLoading: false, showLoginForm: false }))
+          .catch(err => this.setState({ isLoading: false, error: err.message }));
+      });
+    }
+  }
+
+  login = (email, password) => {
+    const { firebase } = this.props;
+    this.setState({ isLoading: true, error: '' }, () => {
       firebase.auth.signInWithEmailAndPassword(email, password)
-        .then(() => this.setState({ isLoading: false }))
-        .catch(() => this.setState({ isLoading: false }));
+        .then(() => this.setState({ isLoading: false, showLoginForm: false }))
+        .catch(err => this.setState({ isLoading: false, error: err.message }));
     });
   }
 
@@ -75,27 +90,37 @@ class App extends Component {
 
   render() {
     const {
-      visibleMenu, user, isLoading, current_lang, browserAccept,
+      visibleMenu, user, isLoading, current_lang, browserAccept, showLoginForm, error,
     } = this.state;
+
     return (
       <div style={{ background: 'rgba(0, 0, 0, 0.5)' }}>
+        {showLoginForm && (
+          <Login
+            isLoading={isLoading}
+            error={error}
+            toggleLoginForm={this.toggleLoginForm}
+            login={this.login}
+            signIn={this.signIn}
+          />
+        )}
         <HashRouter>
           <div>
             <Navbar dark style={{ background: 'black' }}>
-              <NavbarBrand href="/" className="mr-auto">Skoltech E-sports</NavbarBrand>
+              <NavbarBrand href="" className="mr-auto">Skoltech E-sports</NavbarBrand>
               {
                 !isLoading
                   ? (
                     <>
                       <div className="ml-auto mr-4 text-white font-weight-light small">{user ? user.email : ''}</div>
-                      {!user && <Button className="mr-2" color="success" size="sm" onClick={this.login}>Login</Button>}
+                      {(!user && !showLoginForm) && <Button className="mr-2" color="success" size="sm" onClick={this.toggleLoginForm}>Login</Button>}
                       {user && <Button color="danger" size="sm" onClick={this.logout}>Logout</Button>}
                     </>
                   )
                   : <Spinner className="text-white mr-3" />
               }
             </Navbar>
-            <Container fluid className="position-relative" style={{ minHeight: '100vh' }}>
+            <Container fluid className="position-relative" style={{ minHeight: '200vh' }}>
               <Row>
                 <NavbarMenu
                   toggleMenu={this.toggleMenu}
@@ -106,7 +131,19 @@ class App extends Component {
                 {visibleMenu && <MenuFilter onClick={this.toggleMenu} />}
                 <Col className="pt-4" style={{ overflow: 'hidden', marginLeft: '60px' }}>
                   <Route path="/" exact component={() => <Redirect from="/" to="/home" />} />
-                  <Route path="/home" exact component={() => (browserAccept ? <HomeScreen current_lang={current_lang} /> : <Container className="text-light text-center mt-5 font-weight-light">{'Your browser does not support this platform. Please use desktop Google Chrome >= 45.'}</Container>)} />
+                  <Route
+                    path="/home"
+                    exact
+                    component={() => (
+                      browserAccept
+                        ? <HomeScreen current_lang={current_lang} />
+                        : (
+                          <Container className="text-light text-center mt-5 font-weight-light">
+                            {'Your browser does not support this platform. Please use desktop Google Chrome >= 45.'}
+                          </Container>
+                        )
+                    )}
+                  />
                   {/* <Route path="/home/balls" component={Balls} /> */}
                   {/* <Route path="/users/" component={UsersScreen} /> */}
                 </Col>

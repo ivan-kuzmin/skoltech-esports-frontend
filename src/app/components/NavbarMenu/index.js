@@ -62,30 +62,32 @@ const NavbarMenu = (props) => {
 
   return (
     <NavbarCol visible={visibleMenu ? 1 : 0} style={{ zIndex: '2' }} className={`pb-3 h-100 bg-dark px-0 position-absolute ${visibleMenu ? 'text-right shadow' : 'text-center'}`}>
-      <Nav vertical className="sticky-top">
-        <MenuButton
-          className="d-flex align-items-center justify-content-end px-3"
-          onClick={toggleMenu}
-        >
-          {visibleMenu ? <ArrowLeft /> : <ArrowRight />}
-        </MenuButton>
-        {
-          menuList.map(item => (
-            <NavItem key={item.id}>
-              <NavLink
-                to={item.link}
-                activeClassName="text-dark"
-                activeStyle={{ background: 'rgba(247, 249, 250, 0.7)' }}
-                className="nav-link text-light font-weight-light d-flex align-items-center justify-content-end"
-                style={{ height: '55px' }}
-                onClick={closeMenu}
-              >
-                <div className={`ml-0 mr-auto ${visibleMenu ? 'd-flex' : 'd-none'}`}>{item.name}</div>
-                {item.icon}
-              </NavLink>
-            </NavItem>
-          ))
-        }
+      <Nav vertical className="h-100">
+        <div className="sticky-top">
+          <MenuButton
+            className="d-flex align-items-center justify-content-end px-3"
+            onClick={toggleMenu}
+          >
+            {visibleMenu ? <ArrowLeft /> : <ArrowRight />}
+          </MenuButton>
+          {
+            menuList.map(item => (
+              <NavItem key={item.id}>
+                <NavLink
+                  to={item.link}
+                  activeClassName="text-dark"
+                  activeStyle={{ background: 'rgba(247, 249, 250, 0.7)' }}
+                  className="nav-link text-light font-weight-light d-flex align-items-center justify-content-end"
+                  style={{ height: '55px' }}
+                  onClick={closeMenu}
+                >
+                  <div className={`ml-0 mr-auto ${visibleMenu ? 'd-flex' : 'd-none'}`}>{item.name}</div>
+                  {item.icon}
+                </NavLink>
+              </NavItem>
+            ))
+          }
+        </div>
         <Language
           visibleMenu={visibleMenu}
           closeMenu={closeMenu}
