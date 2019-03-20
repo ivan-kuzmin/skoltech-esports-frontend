@@ -24,6 +24,7 @@ module.exports = (env, argv) => {
     'memory_test',
     'diat_shif',
     'focu_shif',
+    'rest_insh',
   ];
 
   const entryGames = {};
