@@ -120,7 +120,7 @@ class App extends Component {
                   : <Spinner className="text-white mr-3" />
               }
             </Navbar>
-            <Container fluid className="position-relative" style={{ minHeight: '200vh' }}>
+            <Container fluid className="position-relative" style={{ minHeight: '100vh' }}>
               <Row>
                 <NavbarMenu
                   toggleMenu={this.toggleMenu}
