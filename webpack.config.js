@@ -2,6 +2,7 @@ const path = require('path');
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 
 module.exports = (env, argv) => {
@@ -21,6 +22,7 @@ module.exports = (env, argv) => {
     'visual_search_with_time_limit',
     'expanding_ball',
     'memory_test',
+    'diat_shif',
   ];
 
   const entryGames = {};
@@ -88,6 +90,9 @@ module.exports = (env, argv) => {
     },
     plugins: [
       ...htmlGames,
+      new CopyPlugin([
+        { from: './src/assets/sound_data', to: 'sound_data' },
+      ]),
     ],
   };
 

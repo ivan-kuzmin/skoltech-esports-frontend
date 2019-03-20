@@ -7,6 +7,7 @@ import mouseTrackingLang from 'src/games/mouse_tracking/lang';
 import mouseAimingLang from 'src/games/mouse_aiming/lang';
 import optimalTrajectoryLang from 'src/games/optimal_trajectory/lang';
 import visualSearchWithTimeLimitLang from 'src/games/visual_search_with_time_limit/lang';
+import diatShifLang from 'src/games/diat_shif/lang';
 import expandingBallLang from 'src/games/expanding_ball/lang';
 import memoryTestLang from 'src/games/memory_test/lang';
 import ballsImage from './balls.png';
@@ -99,6 +100,13 @@ function gamesList(current_lang) {
     //   title: 'Memory Test',
     //   description: memoryTestLang[current_lang].Menu.description,
     // },
+    {
+      link: 'games/diat_shif',
+      status: 'done',
+      image: '',
+      title: 'DIAT-SHIF',
+      description: diatShifLang[current_lang].Menu.description,
+    },
   ];
 
   for (const game in games) {
