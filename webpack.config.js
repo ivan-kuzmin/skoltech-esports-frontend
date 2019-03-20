@@ -23,6 +23,7 @@ module.exports = (env, argv) => {
     'expanding_ball',
     'memory_test',
     'diat_shif',
+    'focu_shif',
   ];
 
   const entryGames = {};
