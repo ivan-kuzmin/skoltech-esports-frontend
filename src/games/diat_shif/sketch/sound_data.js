@@ -1,6 +1,6 @@
 
 const sounds = {
-  main_url: '/sound_data',
+  main_url: `${window.location.href.split('games')[0]}sound_data`,
   collection: ['weapons', 'player', 'physics'],
   weapons: {
     main_url: '/weapons',
