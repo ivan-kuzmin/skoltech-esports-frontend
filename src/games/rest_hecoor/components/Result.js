@@ -7,7 +7,7 @@ const Result = (props) => {
     <li className="text-left">
       <span className="text-light">
         <span>
-          {`${result.date} – `}
+          {`${result.date}`}
         </span>
         {/* <span>
           {`Score: ${result.score}, `}
