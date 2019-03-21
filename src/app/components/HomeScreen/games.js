@@ -10,6 +10,8 @@ import visualSearchWithTimeLimitLang from 'src/games/visual_search_with_time_lim
 import diatShifLang from 'src/games/diat_shif/lang';
 import focuShifLang from 'src/games/focu_shif/lang';
 import restInshLang from 'src/games/rest_insh/lang';
+import restHecoorLang from 'src/games/rest_hecoor/lang';
+import womRestLang from 'src/games/wom_rest/lang';
 import expandingBallLang from 'src/games/expanding_ball/lang';
 import memoryTestLang from 'src/games/memory_test/lang';
 import ballsImage from './balls.png';
@@ -122,6 +124,20 @@ function gamesList(current_lang) {
       image: '',
       title: 'REST-INSH',
       description: restInshLang[current_lang].Menu.description,
+    },
+    {
+      link: 'games/rest_hecoor',
+      status: '',
+      image: '',
+      title: 'REST-HECOOR',
+      description: restHecoorLang[current_lang].Menu.description,
+    },
+    {
+      link: 'games/wom_rest',
+      status: 'done',
+      image: '',
+      title: 'WOM-REST',
+      description: womRestLang[current_lang].Menu.description,
     },
   ];
 

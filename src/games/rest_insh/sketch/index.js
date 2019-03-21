@@ -2,6 +2,7 @@ import createStats from 'src/assets/js/createStats';
 
 export default function sketch(p) {
   const stats = createStats();
+  p.props = {};
   const gl_balls = [];
   let gl_right_hit = 0;
   let gl_wrong_hit = 0;

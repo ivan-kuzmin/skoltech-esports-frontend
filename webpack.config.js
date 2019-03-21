@@ -25,6 +25,8 @@ module.exports = (env, argv) => {
     'diat_shif',
     'focu_shif',
     'rest_insh',
+    'rest_hecoor',
+    'wom_rest',
   ];
 
   const entryGames = {};
