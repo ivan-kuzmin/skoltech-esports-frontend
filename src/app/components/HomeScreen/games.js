@@ -127,7 +127,7 @@ function gamesList(current_lang) {
     },
     {
       link: 'games/rest_hecoor',
-      status: '',
+      status: 'done',
       image: '',
       title: 'REST-HECOOR',
       description: restHecoorLang[current_lang].Menu.description,
