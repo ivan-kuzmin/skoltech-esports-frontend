@@ -34,13 +34,13 @@ function gamesList(current_lang) {
       title: 'Reaction test',
       description: reactionTestLang[current_lang].Menu.description,
     },
-    // {
-    //   link: '', // 'games/reaction_decision_test',
-    //   status: '',
-    //   image: ballsImage2,
-    //   title: 'Reaction + Decision Test',
-    //   description: reactionDecisionTestLang[current_lang].Menu.description,
-    // },
+    {
+      link: 'games/reaction_decision_test',
+      status: 'done',
+      image: ballsImage2,
+      title: 'Reaction + Decision Test',
+      description: reactionDecisionTestLang[current_lang].Menu.description,
+    },
     // {
     //   link: 'games/two_hands_coordination',
     //   status: 'danger',

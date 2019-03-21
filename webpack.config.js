@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   const games = [
     'balls',
     'reaction_test',
-    // 'reaction_decision_test',
+    'reaction_decision_test',
     'two_hands_coordination',
     'keyboard_mouse_coordination',
     'keys_reaction_test',
