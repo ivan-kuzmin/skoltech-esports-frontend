@@ -9,8 +9,9 @@ export const lang = {
     },
     Inputs: {
       matrixSize: 'Matrix size',
-      letterSize: 'Letter size',
+      cellSize: 'Cell size',
       count_of_trials: 'Count of trials',
+      countOfTargets: 'Count of targets',
     },
     Filter: {
       last_results: 'Your last results',
@@ -19,15 +20,16 @@ export const lang = {
   ru: {
     Menu: {
       header: 'Инструкция',
-      description: '---',
+      description: 'Сначала вам покажут матрицу ячеек. Затем некоторые из них будут помечены как «Целевые» ячейки синего цвета. Вам предлагается запомнить позиции «Целевых» ячеек и отметить их левой кнопкой мыши.',
       current_level: 'Текущий уровень',
       new_game: 'Новая игра',
       home: 'Домой',
     },
     Inputs: {
       matrixSize: 'Размер матрицы',
-      letterSize: 'Размер каждой буквы',
+      cellSize: 'Размер ячейки',
       count_of_trials: 'Количество попыток',
+      countOfTargets: 'Количество целей',
     },
     Filter: {
       last_results: 'Ваши последние результаты',

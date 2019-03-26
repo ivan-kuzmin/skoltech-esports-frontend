@@ -16,8 +16,8 @@ export default function sketch(p) {
     p.ready = false;
     p.timeOfStart = 0;
     p.timeOfEnd = 0;
-    clearInterval(p.timeOut1);
-    clearInterval(p.timeOut2);
+    clearTimeout(p.timeOut1);
+    clearTimeout(p.timeOut2);
 
     createMatrix();
     if (p.startGame) { startTimer(); }

@@ -97,13 +97,13 @@ function gamesList(current_lang) {
     //   title: 'Expanding Ball',
     //   description: expandingBallLang[current_lang].Menu.description,
     // },
-    // {
-    //   link: '', // 'games/memory_test',
-    //   status: '',
-    //   image: '',
-    //   title: 'Memory Test',
-    //   description: memoryTestLang[current_lang].Menu.description,
-    // },
+    {
+      link: 'games/memory_test',
+      status: 'done',
+      image: '',
+      title: 'Memory Test',
+      description: memoryTestLang[current_lang].Menu.description,
+    },
     {
       link: 'games/diat_shif',
       status: 'done',
