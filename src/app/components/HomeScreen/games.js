@@ -12,7 +12,7 @@ import focuShifLang from 'src/games/focu_shif/lang';
 import restInshLang from 'src/games/rest_insh/lang';
 import restHecoorLang from 'src/games/rest_hecoor/lang';
 import womRestLang from 'src/games/wom_rest/lang';
-import expandingBallLang from 'src/games/expanding_ball/lang';
+// import expandingBallLang from 'src/games/expanding_ball/lang';
 import memoryTestLang from 'src/games/memory_test/lang';
 import ballsImage from './balls.png';
 import ballsImage1 from './balls1.png';

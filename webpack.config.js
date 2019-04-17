@@ -27,6 +27,7 @@ module.exports = (env, argv) => {
     'rest_insh',
     'rest_hecoor',
     'wom_rest',
+    'template_test',
   ];
 
   const entryGames = {};

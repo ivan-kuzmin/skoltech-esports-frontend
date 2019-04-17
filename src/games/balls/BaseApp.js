@@ -52,7 +52,7 @@ class BaseApp extends Component {
     const playedGames = (game.playedGames >= game.countOfGames) ? 0 : (game.playedGames + 1);
     this.setState({ newGame, game: { ...game, playedGames }, results }, () => {
       if (newGame) {
-        setTimeout(startNewGame, latency);
+        setTimeout(() => { if (document.fullscreenElement) startNewGame(); }, latency);
       } else {
         document.exitFullscreen();
         document.exitPointerLock();

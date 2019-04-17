@@ -108,7 +108,7 @@ export default function sketch(p) {
 
   // ======================================================= END GAME FUNCTION
   function endGame() {
-    p.onSetAppState({ newGame: false, playedGames: 0 });
+    p.onSetAppState(state => ({ newGame: false, game: { ...state.game, playedGames: 0 } }));
     p.startGame = false;
     clearTimeout(p.timeOut1);
   }
