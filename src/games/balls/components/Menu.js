@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'reactstrap';
+import { Button, Collapse } from 'reactstrap';
 import styled from 'styled-components';
 
 export const Background = styled.div`
@@ -16,16 +16,37 @@ export const Background = styled.div`
   }
 `;
 
+const Header = styled.h5`
+  position: relative;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  & span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+`;
+
 const Menu = (props) => {
   const {
     lang, newGameButtonClick, goHome, children,
   } = props;
+  const [visibleMenu, setVisibleMenu] = useState(false);
+
+  const handleClick = () => {
+    setVisibleMenu(!visibleMenu);
+  };
 
   return (
     <Background id="menu" className="px-3 py-4">
       <div className="text-light mb-5">
-        <h5 className="font-weight-bold text-center">{lang.header}</h5>
-        <p className="small" dangerouslySetInnerHTML={{ __html: lang.description }} />
+        <Header onClick={handleClick} className="font-weight-bold text-center">
+          {lang.header}
+          <span>{visibleMenu ? '⬇' : '⬅'}</span>
+        </Header>
+        <Collapse isOpen={visibleMenu} className="small" dangerouslySetInnerHTML={{ __html: lang.description }} />
         {children}
       </div>
       <Button className="btn btn-warning w-100 mb-1 text-uppercase" onClick={newGameButtonClick}>

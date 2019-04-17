@@ -2,7 +2,7 @@ export const lang = {
   en: {
     Menu: {
       header: 'Instruction',
-      description: '---',
+      description: 'Show how accurate you can memorize shapes. At first you will see 3 different shapes, you have to memorized them and after that you have to find it from 3 other combinations.',
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',

@@ -2,7 +2,7 @@ export const lang = {
   en: {
     Menu: {
       header: 'Instruction',
-      description: '---',
+      description: 'In this game you should try to press \'W\' key on your keyboard and click the box as fast as you can to fill the corresponding bars on each side.',
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',

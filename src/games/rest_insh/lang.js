@@ -2,7 +2,12 @@ export const lang = {
   en: {
     Menu: {
       header: 'Instruction',
-      description: '---',
+      description: 'In this game you have 2 choice to select but there are 2 different case you need to consider: '
+        + '<ul class="m-0 pl-3 pb-3">'
+          + '<li class="pt-3">You have to select the shape which is bigger than the other one.</li>'
+          + '<li class="pt-3">You have to select the shape with the larger number.</li>'
+        + '</ul>'
+        + '<i>Note: under the time bar you can find which case you need to consider for each turn.</i>',
       current_level: 'Current level',
       new_game: 'New Game',
       home: 'Home',

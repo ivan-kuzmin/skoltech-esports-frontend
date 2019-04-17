@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --mode development",
+    "watch": "webpack --mode development --watch",
     "dev": "webpack --mode=development",
     "build": "webpack --mode=production"
   },
