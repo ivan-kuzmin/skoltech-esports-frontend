@@ -108,7 +108,7 @@ function gamesList(current_lang) {
       link: 'games/diat_shif',
       status: 'done',
       image: '',
-      title: 'DIAT-SHIF',
+      title: 'Simultaneity test',
       description: diatShifLang[current_lang].Menu.description,
     },
     // {
@@ -122,7 +122,7 @@ function gamesList(current_lang) {
       link: 'games/rest_insh',
       status: 'done',
       image: '',
-      title: 'REST-INSH',
+      title: 'Processing Test',
       description: restInshLang[current_lang].Menu.description,
     },
     {
