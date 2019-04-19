@@ -129,14 +129,14 @@ function gamesList(current_lang) {
       link: 'games/rest_hecoor',
       status: 'done',
       image: '',
-      title: 'REST-HECOOR',
+      title: 'Speed test both hands',
       description: restHecoorLang[current_lang].Menu.description,
     },
     {
       link: 'games/wom_rest',
       status: 'done',
       image: '',
-      title: 'WOM-REST',
+      title: 'Recognition test',
       description: womRestLang[current_lang].Menu.description,
     },
   ];
