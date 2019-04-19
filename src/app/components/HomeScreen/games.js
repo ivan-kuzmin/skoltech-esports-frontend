@@ -115,7 +115,7 @@ function gamesList(current_lang) {
     //   link: 'games/focu_shif',
     //   status: 'done',
     //   image: '',
-    //   title: 'FOCU-SHIF',
+    //   title: 'Attention and Inattention Test',
     //   description: focuShifLang[current_lang].Menu.description,
     // },
     {

@@ -7,7 +7,7 @@ import sketch from './sketch';
 
 class App extends BaseApp {
   state = {
-    name: 'focu_shif',
+    name: 'attention_and_inattention_test',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],
