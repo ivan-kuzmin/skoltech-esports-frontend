@@ -8,7 +8,7 @@ import mouseAimingLang from 'src/games/mouse_aiming/lang';
 import optimalTrajectoryLang from 'src/games/optimal_trajectory/lang';
 import visualSearchWithTimeLimitLang from 'src/games/visual_search_with_time_limit/lang';
 import diatShifLang from 'src/games/diat_shif/lang';
-// import focuShifLang from 'src/games/focu_shif/lang';
+import focuShifLang from 'src/games/focu_shif/lang';
 import restInshLang from 'src/games/rest_insh/lang';
 import restHecoorLang from 'src/games/rest_hecoor/lang';
 import womRestLang from 'src/games/wom_rest/lang';
@@ -111,13 +111,13 @@ function gamesList(current_lang) {
       title: 'Simultaneity test',
       description: diatShifLang[current_lang].Menu.description,
     },
-    // {
-    //   link: 'games/focu_shif',
-    //   status: 'done',
-    //   image: '',
-    //   title: 'Attention and Inattention Test',
-    //   description: focuShifLang[current_lang].Menu.description,
-    // },
+    {
+      link: 'games/focu_shif',
+      status: 'done',
+      image: '',
+      title: 'Attention and Inattention Test',
+      description: focuShifLang[current_lang].Menu.description,
+    },
     {
       link: 'games/rest_insh',
       status: 'done',
