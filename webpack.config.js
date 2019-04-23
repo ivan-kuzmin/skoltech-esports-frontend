@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
     'expanding_ball',
     'memory_test',
     'diat_shif',
-    // 'focu_shif',
+    'focu_shif',
     'rest_insh',
     'rest_hecoor',
     'wom_rest',
@@ -97,6 +97,9 @@ module.exports = (env, argv) => {
       ...htmlGames,
       new CopyPlugin([
         { from: './src/assets/sound_data', to: 'sound_data' },
+      ]),
+      new CopyPlugin([
+        { from: './src/assets/img', to: 'img' },
       ]),
     ],
   };

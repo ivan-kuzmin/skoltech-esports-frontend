@@ -2,22 +2,54 @@ import createStats from 'src/assets/js/createStats';
 
 export default function sketch(p) {
   const stats = createStats();
-  p.props = {};
-  const yl_color = 'rgb(221, 229, 0)';
-  const rd_color = 'rgb(229, 26, 0)';
-  const wh_color = 'rgb(255,255,255)';
-  let gl_startGame = [];
-  let gl_timer = [];
-  let time_bar = [];
-  const start_time = [];
-  const circles = [];
-  let test = [];
-  const gl_result = [];
-  let hovered = false;
-  const cv_width = p.displayWidth;
-  const cv_height = p.displayHeight;
-  const cv_mid = [cv_width/2, cv_height/2];
-  let gl_score;
+  const yl_color = p.color(221,229,  0);
+  const rd_color = p.color(229, 26,  0);
+  const wh_color = p.color(255,255,255);
+  var gl_startGame = [];
+  var gl_timer = [];
+  var time_bar = [];
+  var start_time = [];
+  var circles = [];
+  var circles_snk = [];
+  var test = [];
+  var test_snk = [];
+  var gl_result = [];
+  var gl_result_key = [];
+  var gl_score = [];
+  var hovered = false;
+  var img = [];
+  var snk = [];
+  var keys = [];
+  var tree = [];
+  var trunk = [];
+  var press_key = {             
+    17:false, 18:false, 19:false, 20:false,       
+    65:false, 97:false,           
+    83:false, 115:false,          
+    68:false, 100:false,          
+    87:false, 119:false
+  };
+
+
+  let cv_width = p.displayWidth;
+  let cv_height = p.displayHeight;
+  let cv_mid = [cv_width/2,cv_height/2];
+
+  p.preload = function(){
+    tree = p.loadImage(`${window.location.href.split('games')[0]}img` + '/tree.png');
+    trunk = p.loadImage(`${window.location.href.split('games')[0]}img` + '/trunk.png')
+    keys = [p.loadImage(`${window.location.href.split('games')[0]}img` +'/a.png'),
+    p.loadImage(`${window.location.href.split('games')[0]}img` + '/s.png'),
+    p.loadImage(`${window.location.href.split('games')[0]}img` +'/d.png'),
+    p.loadImage(`${window.location.href.split('games')[0]}img` + '/w.png'),
+    p.loadImage(`${window.location.href.split('games')[0]}img` + '/ctrl.png')]
+    snk.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/snake.png'))
+    snk.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/snake2.png'))
+    img.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/chip.png'));
+    img.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/forest_head.png'));
+    img.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/old_head.png'));
+    img.push(p.loadImage(`${window.location.href.split('games')[0]}img` + '/park_head.png'));
+  }
 
   p.setup = function () {
     p.createCanvas(cv_width, cv_height);
@@ -46,14 +78,26 @@ export default function sketch(p) {
       if (gl_startGame) {
         gl_timer.dec();
         gl_score.display();
-        time_bar.display(gl_timer.ratio, gl_timer.mm);
+        time_bar.display(gl_timer.ratio,gl_timer.mm);
+        p.imageMode(p.CORNER);
+        p.image(tree,cv_mid[0],0,cv_mid[0],cv_height);
+        p.image(trunk,0,cv_mid[1]/2,cv_mid[0],3*cv_height/4);
         hovered = false;
+
         for (const circle of circles) {
           circle.display();
-          circle.color = wh_color;
+          circle.type = 0;
           hovered = circle.hovered | hovered;
         }
+
+        for (const circle of circles_snk){
+          circle.display();
+          circle.type = 0;
+        }
+
         change_cl();
+        change_snk();
+        show_keys();
         if (hovered) {
           p.cursor(p.HAND);
         } else {
@@ -62,18 +106,12 @@ export default function sketch(p) {
 
         if (gl_timer.mm == 0) {
           gl_startGame=false;
-          // p.noLoop();
-          // p.fill(104, 104, 104, 200);
-          // p.noStroke();
-          // p.rect(0, 0, cv_width, cv_height);
-          // p.cursor();
-          // p.fill(255);
-          // p.textAlign(p.CENTER, p.CENTER);
-          // p.text('Finished...', cv_width/2, cv_height/2);	// Here the test will finished                     ############# END ##############
-          console.log(gl_result);
-          p.props.generateResult(gl_result, gl_score.score, gl_score.total);
+          p.cursor();
+          
+          // console.log(gl_result);
+          p.props.generateResult({'chipmunk': gl_result, 'snake': gl_result_key}, gl_score.score, gl_score.total);
         }
-      }
+      } 
       if (!p.ready) { drawFilter(); }
     }
 
@@ -111,39 +149,81 @@ export default function sketch(p) {
   function start_game() {
     if (!document.fullscreenElement) { p.wrapper.requestFullscreen(); }
     if (p.ready) {
-      time_bar = new TimeBar(200, 0, cv_width-250, 20);
-      gl_score = new Score(p.width - 20, p.height - 20);
+      time_bar = new TimeBar(200,0,cv_width-250,20)
+      gl_score = new Score(0,cv_height);
       gl_startGame = true;
       create_circles();
-      test = new Test(4, 1000);
+      test = new Test(7,5,1500)
+      test_snk = new Test(4,3,1500)
       change_cl();
-      gl_timer = new Timer(9000, p.millis());
+      change_snk();
+      gl_timer = new Timer(9000,p.millis());
     }
   }
 
   function create_circles() {
-    circles[0] = new Ball(cv_mid[0]-105, cv_mid[1]-105, 90, '');
-    circles[1] = new Ball(cv_mid[0]+105, cv_mid[1]-105, 90, '');
-    circles[2] = new Ball(cv_mid[0]-105, cv_mid[1]+105, 90, '');
-    circles[3] = new Ball(cv_mid[0]+105, cv_mid[1]+105, 90, '');
+    circles[0] = new Ball(7*cv_mid[0]/4,5.8*cv_mid[1]/8,90,'',img);
+    circles[1] = new Ball(15*cv_mid[0]/8,9.3*cv_mid[1]/8,90,'',img);
+    circles[2] = new Ball(6.95*cv_mid[0]/4,11.5*cv_mid[1]/8,90,'',img);
+    circles[3] = new Ball(10.9*cv_mid[0]/8,10.5*cv_mid[1]/8,90,'',img);
+    circles[4] = new Ball(12.5*cv_mid[0]/8,3*cv_mid[1]/8,90,'',img);
+    circles[5] = new Ball(9*cv_mid[0]/8,6*cv_mid[1]/8,90,'',img);
+    circles[6] = new Ball(11*cv_mid[0]/8,3.2*cv_mid[1]/8,90,'',img);
+
+    circles_snk[0] = new Ball(1.1*cv_mid[0]/8,9.5*cv_mid[1]/8,90,'',snk); //a
+    circles_snk[1] = new Ball(3*cv_mid[0]/8,6*cv_mid[1]/8,90,'',snk);   //w
+    circles_snk[2] = new Ball(6.3*cv_mid[0]/8,9.5*cv_mid[1]/8,90,'',snk); //d
+    circles_snk[3] = new Ball(2.7*cv_mid[0]/8,11.5*cv_mid[1]/8,90,'',snk);  //s
+  }
+
+  function show_keys(){
+    p.imageMode(p.CENTER)
+    p.image(keys[3],circles_snk[1].width,circles_snk[1].height-circles_snk[1].radius*.8,circles_snk[1].radius/2,circles_snk[1].radius/2); //w
+    p.image(keys[1],circles_snk[3].width,circles_snk[3].height+circles_snk[3].radius*.8,circles_snk[3].radius/2,circles_snk[3].radius/2); //s
+    p.image(keys[2],circles_snk[2].width+circles_snk[2].radius*.8,circles_snk[2].height,circles_snk[2].radius/2,circles_snk[2].radius/2); //d
+    p.image(keys[0],circles_snk[0].width-circles_snk[0].radius*.8,circles_snk[0].height,circles_snk[0].radius/2,circles_snk[0].radius/2); //a
   }
 
   function change_cl() {
-    if (test.reach_max) {
-      if (test.ans_type==1 | test.ans_type==2) {
-        gl_result.push([1, test.max_t, test.ans_type, -1]);
-        gl_score.inc();
+    if(test.reach_max){
+      if(test.ans_type == 2 | test.ans_type == 3 | test.ans_type == 4){
+        gl_result.push([1,test.max_t,test.ans_type,-1])
+        gl_score.inc()
       } else {
-        gl_result.push([0, test.max_t, test.ans_type, -1]);
-        gl_score.dec();
+        gl_result.push([0,test.max_t,test.ans_type,-1])
+        gl_score.dec()
       }
-      test.next_test();
+      test.next_test()
     }
-    if (test.ans_type == 1) {
-      circles[test.red_ball].set_color(rd_color);
-      circles[test.yel_ball].set_color(yl_color);
-    } else if (test.ans_type == 0) {
-      circles[test.yel_ball].set_color(yl_color);
+    if(test.ans_type == 1){
+      circles[test.red_ball].set_type(2)
+      circles[test.yel_ball].set_type(1)
+    } else if (test.ans_type == 2){
+      circles[test.red_ball].set_type(3)
+      circles[test.yel_ball].set_type(1)
+    } else if (test.ans_type == 3){
+      circles[test.red_ball].set_type(4)
+      circles[test.yel_ball].set_type(1)
+    } else if (test.ans_type == 0){
+      circles[test.yel_ball].set_type(1)
+    }
+  }
+
+  function change_snk() {
+    if(test_snk.reach_max){
+      if(test_snk.ans_type == 2){
+        gl_result_key.push([1,test_snk.max_t,test_snk.ans_type,-1])
+        gl_score.inc()
+      } else {
+        gl_result_key.push([0,test_snk.max_t,test_snk.ans_type,-1])
+        gl_score.dec()
+      }
+      test_snk.next_test()
+    }
+    if(test_snk.ans_type == 1){
+      circles_snk[test_snk.yel_ball].set_type(2)
+    } else if (test_snk.ans_type == 0){
+      circles_snk[test_snk.yel_ball].set_type(1)
     }
   }
 
@@ -175,6 +255,71 @@ export default function sketch(p) {
       }
     }
   };
+
+  p.keyPressed = function(){
+    if(start_game){
+      var tmp = [];
+      var pressed = false;
+      press_key[p.keyCode] = true;
+      // console.log(press_key)
+      if (test_snk.ans_type == 0){
+        if (press_key[17] | press_key[18] | press_key[19] | press_key[20]){     //[a,w,d,s]
+          if (press_key[65] | press_key[97]){               //ctrl + a
+            tmp = [0 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'ctrl + a',p.keyCode];
+            pressed = true;
+          } else if (press_key[83] | press_key[115]){           //ctrl + s
+            tmp = [3 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'ctrl + s',p.keyCode];
+            pressed = true;
+          } else if (press_key[68] | press_key[100]){           //ctrl + d
+            tmp = [2 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'ctrl + d',p.keyCode]
+            pressed = true;
+          } else if (press_key[87] | press_key[119]){           //ctrl + w
+            tmp = [1 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'ctrl + w',p.keyCode]
+            pressed = true;
+          }
+        } else if (press_key[83] | press_key[115] | press_key[68] | press_key[100] | press_key[87] | press_key[119] | press_key[65] | press_key[97]){
+          tmp = [0,test_snk.resp_time,test_snk.ans_type,' ',p.keyCode]
+          pressed = true;
+        }
+      } else if (test_snk.ans_type == 1){
+        if (press_key[65] | press_key[97]){                 //a
+          tmp = [0 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'a',p.keyCode]
+          pressed = true;
+        } else if (press_key[83] | press_key[115]){             //s
+          tmp = [3 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'s',p.keyCode]
+          pressed = true;
+        } else if (press_key[68] | press_key[100]){             //d
+          tmp = [2 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'d',p.keyCode]
+          pressed = true;
+        } else if (press_key[87] | press_key[119]){             //w
+          tmp = [1 == test_snk.yel_ball,test_snk.resp_time,test_snk.ans_type,'w',p.keyCode]
+          pressed = true;
+        }
+
+      } else if (test_snk.ans_type == 2){
+        if (press_key[83] | press_key[115] | press_key[68] | press_key[100] | press_key[87] | press_key[119] | press_key[65] | press_key[97]){
+          gl_result_key.push([0,test_snk.resp_time,test_snk.ans_type,' ',p.keyCode])
+        }
+      }
+      if(pressed){
+        if(tmp[0]){
+          gl_score.inc()
+          tmp[0] = 1;
+        } else {
+          gl_score.dec()
+          tmp[0] = 0;
+        }
+        gl_result_key.push(tmp)
+        test_snk.next_test();
+      }
+    }
+  }
+
+  p.keyReleased = function(){
+    if(start_game){
+      press_key[p.keyCode] = false;
+    }
+  }
 
   class Timer {
     constructor(mm, st_time) {
@@ -223,76 +368,84 @@ export default function sketch(p) {
     }
   }
 
-  class Test {
-    constructor(ball_num, max_t) {
-      this.n = ball_num;
-      this.ans_type = p.floor(p.random(0, (this.n*3)+2));
-      this.ans_type = this.ans_type%3;
-      this.yel_ball = p.floor(p.random(0, this.n));
-      this.red_ball = p.floor(p.random(1, this.n-1));
+  class Test{
+    constructor(ball_num,num_ans_type,max_t){
+      this.n = ball_num
+      this.num_ans_type = num_ans_type;
+      this.ans_type = p.floor(p.random(0,(this.n*this.num_ans_type)));
+      this.ans_type = this.ans_type%this.num_ans_type
+      this.yel_ball = p.floor(p.random(0,this.n));
+      this.red_ball = p.floor(p.random(1,this.n-1));
       this.red_ball = (this.red_ball+this.yel_ball) % (this.n-1);
       this.start_t = p.millis();
       this.max_t = max_t;
     }
-
-    next_test() {
-      this.ans_type = p.floor(p.random(0, (this.n*3)+2));
-      this.ans_type = this.ans_type%3;
-      this.yel_ball = p.floor(p.random(0, this.n));
-      this.red_ball = p.floor(p.random(1, this.n-1));
-      this.red_ball = (this.red_ball+this.yel_ball) % (this.n-1);
-      this.start_t = p.millis();
+    next_test(){
+      this.ans_type = p.floor(p.random(0,(this.n*this.num_ans_type)))
+      this.ans_type = this.ans_type%this.num_ans_type
+      this.yel_ball = p.floor(p.random(0,this.n))
+      this.red_ball = p.floor(p.random(1,this.n-1))
+      this.red_ball = (this.red_ball+this.yel_ball) % (this.n-1)
+      this.start_t = p.millis()
     }
-
-    get reach_max() {
-      if (this.max_t<p.millis()-this.start_t) {
+    get reach_max(){
+      if(this.max_t<p.millis()-this.start_t){
         return true;
+      } else {
+        return false;
       }
-      return false;
     }
-
-    get resp_time() {
-      const tmp = p.millis()-this.start_t;
-      this.start_t = p.millis();
-      return tmp;
+    get resp_time(){
+      var tmp = p.millis()-this.start_t
+      this.start_t = p.millis()
+      return tmp
     }
   }
 
-  class Ball {
-    constructor(width, height, radius, num) {
+  class Ball{
+    constructor(width, height, radius, num,imgs){
       this.height = height;
       this.width = width;
       this.radius = radius;
       this.num = num;
       this.hovered = false;
-      this.color = 'rgb(255,255,255)';
+      this.color = p.color(219, 145, 0,230)
+      this.type = 0;
+      this.imgs = [];
+      this.size = this.radius*(.8);
+      for (var i = 0; i < imgs.length; i++) {
+        this.imgs[i] = imgs[i];
+      }
     }
-
-    hover() {
-      if (p.dist(p.mouseX, p.mouseY, this.width, this.height)<this.radius/2) {
+    hover(){
+      if(p.dist(p.mouseX,p.mouseY,this.width,this.height)<this.radius/2){
         this.hovered = true;
-        p.stroke(220);
+        p.stroke(220)
       } else {
         this.hovered = false;
-        p.stroke(0);
+        p.stroke(0)
       }
     }
-
-    get hit() {
-      if (p.dist(p.mouseX, p.mouseY, this.width, this.height)<this.radius/2) {
+    get hit(){
+      if (p.dist(p.mouseX,p.mouseY,this.width,this.height)<this.radius/2){
         return true;
+      } else {
+        return false;
       }
-      return false;
     }
-
-    set_color(color) {
-      this.color = color;
+    set_type(type){
+      this.type = type
     }
-
-    display() {
-      p.fill(this.color);
+    display(){
+      p.fill(this.color)
       this.hover();
-      p.ellipse(this.width, this.height, this.radius, this.radius);
+      p.ellipse(this.width,this.height,this.radius,this.radius)
+      // p.text(this.num,this.width,this.height)
+      p.imageMode(p.CENTER);
+      if(this.type !=0){
+        p.image(this.imgs[this.type-1],this.width,this.height,this.size,this.size)
+      }
+
     }
   }
 

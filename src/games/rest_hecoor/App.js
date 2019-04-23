@@ -7,7 +7,7 @@ import sketch from './sketch';
 
 class App extends BaseApp {
   state = {
-    name: 'rest_hecoor',
+    name: 'speed_test_both_hands',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],

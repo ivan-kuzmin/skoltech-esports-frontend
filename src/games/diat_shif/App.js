@@ -7,7 +7,7 @@ import sketch from './sketch/index_ed2';
 
 class App extends BaseApp {
   state = {
-    name: 'diat_shif',
+    name: 'simultaneity_test',
     isLoading: true,
     current_lang: this.props.cookies.get('language') || 'en',
     results: [],
